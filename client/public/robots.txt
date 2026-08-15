@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Private, token-based and owner-only areas — never index these.
+Disallow: /admin
+Disallow: /booking/manage
+Disallow: /booking/confirmed
+
+Sitemap: https://www.thelittlebloomingfarm.com/sitemap.xml

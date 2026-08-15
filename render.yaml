@@ -1,0 +1,99 @@
+# Render blueprint for the API.
+#
+# Deploy: push this repo to GitHub, then in Render choose
+#   New → Blueprint → select the repo.
+# Render reads this file, creates the service, and prompts for every env var
+# marked `sync: false` (those are the secrets — they are never committed).
+#
+# The front end is deployed separately on Vercel or Netlify; see DEPLOYMENT.md.
+
+services:
+  - type: web
+    name: lbf-api
+    runtime: node
+    plan: starter # 'free' sleeps after inactivity, which delays Stripe webhooks
+    region: oregon # pick the region closest to your MongoDB Atlas cluster
+    rootDir: server
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      # Render injects PORT itself; the app reads it.
+      - key: PORT
+        value: 10000
+
+      # ---- URLs -----------------------------------------------------------
+      # Must be https and must have no trailing slash.
+      - key: CLIENT_URL
+        value: https://www.thelittlebloomingfarm.com
+      - key: SERVER_URL
+        value: https://api.thelittlebloomingfarm.com
+      # Comma-separated. Never "*". Include every origin the site is served
+      # from — apex and www are different origins to a browser.
+      - key: CORS_ORIGINS
+        value: https://www.thelittlebloomingfarm.com,https://thelittlebloomingfarm.com
+
+      # ---- Session cookie -------------------------------------------------
+      # 'lax' is correct when the API is a subdomain of the site's own domain,
+      # which is the setup above. If you host the front end on a different
+      # domain (e.g. *.vercel.app), change this to 'none'.
+      - key: COOKIE_SAMESITE
+        value: lax
+      - key: COOKIE_DOMAIN
+        value: .thelittlebloomingfarm.com
+      - key: JWT_EXPIRES_IN
+        value: 8h
+
+      # ---- Booking behaviour ----------------------------------------------
+      - key: BOOKING_HOLD_MINUTES
+        value: 35
+      - key: MIN_NIGHTS
+        value: 2
+      - key: MAX_ADVANCE_DAYS
+        value: 540
+
+      # ---- Calendar sync ---------------------------------------------------
+      - key: ICAL_SYNC_ENABLED
+        value: true
+      - key: ICAL_SYNC_CRON
+        value: "*/30 * * * *"
+
+      - key: STRIPE_CURRENCY
+        value: usd
+      - key: CLOUDINARY_FOLDER
+        value: little-blooming-farm
+
+      # ---- Secrets: entered in the Render dashboard, never committed -------
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true # Render generates a strong value on first deploy
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_SECURE
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: MAIL_FROM
+        sync: false
+      - key: OWNER_NOTIFICATION_EMAIL
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false

@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  /* Honour the OS setting globally, not just in JS. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    @apply bg-bloom-100 text-ink font-sans font-light antialiased;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-light text-moss-800;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    @apply bg-moss-700 text-bloom-50;
+  }
+
+  /* A visible, on-brand focus ring — never `outline: none` with no replacement. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-moss-500 ring-offset-2 ring-offset-bloom-100 rounded-sm;
+  }
+
+  /* Quiet, warm scrollbar on the browsers that allow it. */
+  * {
+    scrollbar-color: theme('colors.bloom.400') transparent;
+    scrollbar-width: thin;
+  }
+}
+
+@layer components {
+  /* Small uppercase label above a heading. Used everywhere. */
+  .eyebrow {
+    @apply font-sans text-[11px] font-normal uppercase tracking-eyebrow text-ink-muted;
+  }
+
+  /* The house link: a word with a hairline under it that grows on hover. */
+  .link-underline {
+    @apply relative inline-block;
+  }
+  .link-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 h-px w-full origin-right scale-x-100 bg-current opacity-40;
+    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1), opacity 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-underline:hover::after {
+    @apply origin-left opacity-90;
+  }
+
+  /*
+   * The primary call to action. Deliberately understated — a hairline box with
+   * a fill that arrives slowly from below, not a saturated SaaS button.
+   */
+  .btn-quiet {
+    @apply relative inline-flex items-center justify-center overflow-hidden border border-current
+           px-8 py-3.5 font-sans text-[11px] uppercase tracking-eyebrow
+           transition-colors duration-700 ease-gentle;
+  }
+  .btn-quiet::before {
+    content: '';
+    @apply absolute inset-0 origin-bottom scale-y-0 bg-current;
+    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .btn-quiet:hover::before {
+    @apply scale-y-100;
+  }
+  .btn-quiet > span {
+    @apply relative z-10 transition-colors duration-700 ease-gentle;
+  }
+  .btn-quiet:hover > span {
+    @apply text-bloom-50;
+  }
+  .btn-quiet.on-dark:hover > span {
+    @apply text-moss-900;
+  }
+
+  .btn-solid {
+    @apply inline-flex items-center justify-center bg-moss-700 px-8 py-3.5 font-sans text-[11px]
+           uppercase tracking-eyebrow text-bloom-50 transition-colors duration-500 ease-gentle
+           hover:bg-moss-800 disabled:cursor-not-allowed disabled:bg-ink-faint;
+  }
+
+  .field-label {
+    @apply mb-2 block font-sans text-[11px] uppercase tracking-eyebrow text-ink-muted;
+  }
+
+  .field-input {
+    @apply w-full border-b border-bloom-300 bg-transparent px-0 py-3 font-sans text-base
+           text-ink placeholder:text-ink-faint focus:border-moss-500 focus:outline-none
+           focus:ring-0 transition-colors duration-500 ease-gentle;
+  }
+
+  .rule {
+    @apply h-px w-full bg-bloom-300;
+  }
+
+  /* Long-form editorial body copy. */
+  .prose-farm {
+    @apply max-w-prose font-sans text-[17px] font-light leading-[1.85] text-ink-soft;
+  }
+  .prose-farm p + p {
+    @apply mt-6;
+  }
+}
+
+@layer utilities {
+  .text-shadow-soft {
+    text-shadow: 0 2px 30px rgba(20, 24, 18, 0.45);
+  }
+  .paper-grain {
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(36, 35, 31, 0.045) 1px,
+      transparent 0
+    );
+    background-size: 4px 4px;
+  }
+}

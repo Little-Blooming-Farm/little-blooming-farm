@@ -1,0 +1,43 @@
+{
+  "name": "lbf-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "seed": "node src/scripts/seed.js",
+    "create-admin": "node src/scripts/createAdmin.js",
+    "sync:ical": "node src/scripts/runIcalSync.js",
+    "check": "node --check src/index.js",
+    "verify": "node src/scripts/verify.js",
+    "dev:demo": "node src/scripts/devServer.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.5.1",
+    "compression": "^1.7.5",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "ical-generator": "^8.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.5",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^4.6.0",
+    "node-ical": "^0.27.1",
+    "nodemailer": "^9.0.5",
+    "stripe": "^17.5.0",
+    "zod": "^3.24.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^10.4.3"
+  }
+}

@@ -1,0 +1,578 @@
+{
+  "home/hero-poster.jpg": {
+    "title": "Santa Ynez Valley.JPG",
+    "artist": "Jester7777",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Santa_Ynez_Valley.JPG",
+    "query": "Santa Ynez Valley"
+  },
+  "home/stay-primary.jpg": {
+    "title": "HouseII2007.jpg",
+    "artist": "The original uploader was Mcheath at English Wikipedia.",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:HouseII2007.jpg",
+    "query": "California ranch house"
+  },
+  "home/experiences.jpg": {
+    "title": "一群绵羊和羊驼 - A Herd of Sheep and Alpacas - 2016.04 - panoramio.jpg",
+    "artist": "Chen Huang",
+    "licence": "CC BY 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:%E4%B8%80%E7%BE%A4%E7%BB%B5%E7%BE%8A%E5%92%8C%E7%BE%8A%E9%A9%BC_-_A_Herd_of_Sheep_and_Alpacas_-_2016.04_-_panoramio.jpg",
+    "query": "alpaca herd"
+  },
+  "home/animals.jpg": {
+    "title": "Australian Shepherd in snow.jpg",
+    "artist": "PxHere",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Australian_Shepherd_in_snow.jpg",
+    "query": "Australian Shepherd"
+  },
+  "home/land.jpg": {
+    "title": "Troç de pomeres.jpg",
+    "artist": "Unknown",
+    "licence": "CC BY-SA 3.0",
+    "licenceUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "source": "https://commons.wikimedia.org/wiki/File:Tro%C3%A7_de_pomeres.jpg",
+    "query": "pinned"
+  },
+  "og-cover.jpg": {
+    "title": "Rutherford Hill Vineyards, Napa Valley, California (8563638730).jpg",
+    "artist": "Jim G from Silicon Valley, CA, USA",
+    "licence": "CC BY 2.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Rutherford_Hill_Vineyards,_Napa_Valley,_California_(8563638730).jpg",
+    "query": "pinned"
+  },
+  "stay/hero.jpg": {
+    "title": "Sterling Vineyards, Napa Valley, California, USA.jpg",
+    "artist": "Lyn Gateley",
+    "licence": "CC BY 2.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Sterling_Vineyards,_Napa_Valley,_California,_USA.jpg",
+    "query": "pinned"
+  },
+  "stay/home-01.jpg": {
+    "title": "GoBravo 11 Exterior Gurgaon.jpg",
+    "artist": "Royalmanakshay",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:GoBravo_11_Exterior_Gurgaon.jpg",
+    "query": "farmhouse garden exterior"
+  },
+  "stay/home-02.jpg": {
+    "title": "Dining table for two.jpg",
+    "artist": "Jeremy van Bedijk",
+    "licence": "CC BY 2.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Dining_table_for_two.jpg",
+    "query": "wooden dining table set"
+  },
+  "stay/home-04.jpg": {
+    "title": "Rocking chairs on front porch, Thomas Wolfe House IMG 5173.JPG",
+    "artist": "Billy Hathorn",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Rocking_chairs_on_front_porch,_Thomas_Wolfe_House_IMG_5173.JPG",
+    "query": "porch chairs house"
+  },
+  "stay/guest-01.jpg": {
+    "title": "Garden Walls to White House Cottage, Llandaff.jpg",
+    "artist": "Bibeyjj",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Garden_Walls_to_White_House_Cottage,_Llandaff.jpg",
+    "query": "cottage garden house"
+  },
+  "stay/guest-02.jpg": {
+    "title": "Patio to the rear of the Swan and Talbot, Wetherby (19th April 2019).jpg",
+    "artist": "Mtaylor848",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Patio_to_the_rear_of_the_Swan_and_Talbot,_Wetherby_(19th_April_2019).jpg",
+    "query": "garden patio morning"
+  },
+  "stay/guest-03.jpg": {
+    "title": "USVI IMG 5174 - White bedroom with vaulted ceiling bed dresser and window letting in soft light.jpg",
+    "artist": "Category:Government of the United States Virgin Islands",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:USVI_IMG_5174_-_White_bedroom_with_vaulted_ceiling_bed_dresser_and_window_letting_in_soft_light.jpg",
+    "query": "bedroom window light"
+  },
+  "stay/bedrooms.jpg": {
+    "title": "USVI IMG 5189 - Bright minimalist bedroom with white walls a high vaulted ceiling and a colorful zigzag rug on the floor A large bed with white linens sits against the wall flanked by two....jpg",
+    "artist": "Category:Government of the United States Virgin Islands",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:USVI_IMG_5189_-_Bright_minimalist_bedroom_with_white_walls_a_high_vaulted_ceiling_and_a_colorful_zigzag_rug_on_the_floor_A_large_bed_with_white_linens_sits_against_the_wall_flanked_by_two....jpg",
+    "query": "bedroom linen bed"
+  },
+  "animals/ducks.jpg": {
+    "title": "Indian runner duck looking at a camera.jpg",
+    "artist": "Daisytheduck",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Indian_runner_duck_looking_at_a_camera.jpg",
+    "query": "Indian Runner duck"
+  },
+  "animals/peacocks.jpg": {
+    "title": "Pavo Real Venezolano.jpg",
+    "artist": "Wilfredor",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Pavo_Real_Venezolano.jpg",
+    "query": "Pavo cristatus male"
+  },
+  "experiences/stargazing.jpg": {
+    "title": "Milky way1.jpg",
+    "artist": "NASA/JPL-Caltech/UCLA",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Milky_way1.jpg",
+    "query": "Milky Way galaxy sky"
+  },
+  "experiences/workshops.jpg": {
+    "title": "Floral arrangement in church.JPG",
+    "artist": "Whiteghost.ink",
+    "licence": "CC BY-SA 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Floral_arrangement_in_church.JPG",
+    "query": "flower arranging"
+  },
+  "land/hero.jpg": {
+    "title": "Cahuilla Mountain as seen from Oak Mountain.jpg",
+    "artist": "Z3lvs",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Cahuilla_Mountain_as_seen_from_Oak_Mountain.jpg",
+    "query": "California oak woodland"
+  },
+  "land/orchard.jpg": {
+    "title": "Orchard at Fort Vancouver (2019) (5eeaf53a-33ec-4b7a-a315-869e93a16887).JPG",
+    "artist": "NPS",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Orchard_at_Fort_Vancouver_(2019)_(5eeaf53a-33ec-4b7a-a315-869e93a16887).JPG",
+    "query": "pinned"
+  },
+  "land/light.jpg": {
+    "title": "Sunlight Through The Trees (Unsplash).jpg",
+    "artist": "Darren Bockman bockman",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Sunlight_Through_The_Trees_(Unsplash).jpg",
+    "query": "sunlight through trees"
+  },
+  "local/los-olivos.jpg": {
+    "title": "Los Olivos (Granada).jpg",
+    "artist": "Lopezsuarez",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Los_Olivos_(Granada).jpg",
+    "query": "Los Olivos California"
+  },
+  "local/solvang-bakery.jpg": {
+    "title": "Red Fruit Danish - Dharma Specialty Coffee, North Road, Brighton 2024-03-14.jpg",
+    "artist": "Andy Li",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Red_Fruit_Danish_-_Dharma_Specialty_Coffee,_North_Road,_Brighton_2024-03-14.jpg",
+    "query": "Danish pastry"
+  },
+  "local/solvang-museum.jpg": {
+    "title": "Solvang, CA (2025).jpg",
+    "artist": "Ligocsicnarf89",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Solvang,_CA_(2025).jpg",
+    "query": "Solvang California"
+  },
+  "local/mission.jpg": {
+    "title": "Mission Santa Ines (2023).jpg",
+    "artist": "DestinationFearFan",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Mission_Santa_Ines_(2023).jpg",
+    "query": "Mission Santa Ines"
+  },
+  "local/nojoqui.jpg": {
+    "title": "Ephemeral Waterfall in Berryessa-Snow Mountain National Monument (52635280119).jpg",
+    "artist": "blmcalifornia",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Ephemeral_Waterfall_in_Berryessa-Snow_Mountain_National_Monument_(52635280119).jpg",
+    "query": "waterfall forest California"
+  },
+  "local/figueroa.jpg": {
+    "title": "Lupines Figueroa Mountain Overlooking San Rafael Mountain Range (53572097441).jpg",
+    "artist": "Region 5 Photography",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Lupines_Figueroa_Mountain_Overlooking_San_Rafael_Mountain_Range_(53572097441).jpg",
+    "query": "Figueroa Mountain"
+  },
+  "local/riding.jpg": {
+    "title": "Beatys Butte Wild Horse Training Facility (27481764768).jpg",
+    "artist": "Bureau of Land Management Oregon and Washington from Portland, America",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Beatys_Butte_Wild_Horse_Training_Facility_(27481764768).jpg",
+    "query": "pinned"
+  },
+  "gallery/04.jpg": {
+    "title": "USVI IMG 5417 - Serene coastal villa with a long pool surrounded by palm trees and overlooking the ocean under a cloudy sky.jpg",
+    "artist": "Category:Government of the United States Virgin Islands",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:USVI_IMG_5417_-_Serene_coastal_villa_with_a_long_pool_surrounded_by_palm_trees_and_overlooking_the_ocean_under_a_cloudy_sky.jpg",
+    "query": "outdoor pool villa"
+  },
+  "gallery/06.jpg": {
+    "title": "Kale and Cabbage in Raised Garden Beds (49200262267).jpg",
+    "artist": "Alabama Extension",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Kale_and_Cabbage_in_Raised_Garden_Beds_(49200262267).jpg",
+    "query": "vegetable garden beds"
+  },
+  "gallery/08.jpg": {
+    "title": "Aerial view of farmland - Kings County, California.jpg",
+    "artist": "Kingofthedead",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_farmland_-_Kings_County,_California.jpg",
+    "query": "aerial view farmland"
+  },
+  "gallery/10.jpg": {
+    "title": "Kew Gardens, the rock garden waterfall with spring flowers.jpg",
+    "artist": "AndyScott",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Kew_Gardens,_the_rock_garden_waterfall_with_spring_flowers.jpg",
+    "query": "spring flower garden"
+  },
+  "gallery/12.jpg": {
+    "title": "Golden Sunset Silhouette.jpg",
+    "artist": "Talha J Siam",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Golden_Sunset_Silhouette.jpg",
+    "query": "golden hour hills"
+  },
+  "home/stay-secondary.jpg": {
+    "title": "17- 18th-century Catsford Cottage garden, Newgate Street Hatfield Hertfordshire England.jpg",
+    "artist": "Acabashi",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:17-_18th-century_Catsford_Cottage_garden,_Newgate_Street_Hatfield_Hertfordshire_England.jpg",
+    "query": "pinned"
+  },
+  "stay/pool.jpg": {
+    "title": "Zichy Mansion, pool in Fonyód, 2016 Hungary.jpg",
+    "artist": "Globetrotter19",
+    "licence": "CC BY-SA 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Zichy_Mansion,_pool_in_Fony%C3%B3d,_2016_Hungary.jpg",
+    "query": "pinned"
+  },
+  "stay/spa.jpg": {
+    "title": "Relaxia Mineyama Kogen Hotel Kamikawa Hyogo pref07n4272.jpg",
+    "artist": "663highland",
+    "licence": "CC BY 2.5",
+    "licenceUrl": "https://creativecommons.org/licenses/by/2.5",
+    "source": "https://commons.wikimedia.org/wiki/File:Relaxia_Mineyama_Kogen_Hotel_Kamikawa_Hyogo_pref07n4272.jpg",
+    "query": "hot tub outdoor"
+  },
+  "stay/outdoor.jpg": {
+    "title": "Florida Botanical Gardens DSC 2595 pp (38609631386).jpg",
+    "artist": "Walter from Tampa/St Petersburg, Florida",
+    "licence": "CC BY 2.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Florida_Botanical_Gardens_DSC_2595_pp_(38609631386).jpg",
+    "query": "garden string lights evening"
+  },
+  "animals/cowboy.jpg": {
+    "title": "Wet Australian Shepherd dog, side view.jpg",
+    "artist": "Joselodos",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Wet_Australian_Shepherd_dog,_side_view.jpg",
+    "query": "Australian Shepherd dog grass"
+  },
+  "animals/alpacas.jpg": {
+    "title": "Alpacas.JPG",
+    "artist": "Philippe Lavoie",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Alpacas.JPG",
+    "query": "alpaca"
+  },
+  "animals/goats.jpg": {
+    "title": "Nigerian Dwarf goat - 02.jpg",
+    "artist": "Oleg Yunakov",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nigerian_Dwarf_goat_-_02.jpg",
+    "query": "Nigerian Dwarf goat"
+  },
+  "animals/chickens.jpg": {
+    "title": "Free Range Chicken.jpg",
+    "artist": "safaritravelplus",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Free_Range_Chicken.jpg",
+    "query": "free range chicken"
+  },
+  "experiences/hero.jpg": {
+    "title": "Morning mist lifting from plowed field 2.jpg",
+    "artist": "W.carter",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Morning_mist_lifting_from_plowed_field_2.jpg",
+    "query": "farm field mist"
+  },
+  "experiences/alpacas.jpg": {
+    "title": "Alpaca (Vicugna pacos) (8121527309).jpg",
+    "artist": "AnemoneProjectors (talk) (Flickr)",
+    "licence": "CC BY-SA 2.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Alpaca_(Vicugna_pacos)_(8121527309).jpg",
+    "query": "alpaca head"
+  },
+  "experiences/goats.jpg": {
+    "title": "Feeding goats (zoo d'Attilly).jpg",
+    "artist": "Tangopaso",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Feeding_goats_(zoo_d%27Attilly).jpg",
+    "query": "goat feeding"
+  },
+  "experiences/eggs.jpg": {
+    "title": "Eggs in a plastic bowl gotten from Noiler Birds 03.jpg",
+    "artist": "Samsule2",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Eggs_in_a_plastic_bowl_gotten_from_Noiler_Birds_03.jpg",
+    "query": "pinned"
+  },
+  "experiences/garden.jpg": {
+    "title": "Leafy Greens in Raised Garden Beds (49199571663).jpg",
+    "artist": "Alabama Extension",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Leafy_Greens_in_Raised_Garden_Beds_(49199571663).jpg",
+    "query": "raised bed vegetable garden"
+  },
+  "experiences/movie-night.jpg": {
+    "title": "Luxembourg City Open Air Cinema, July 2025, Knuedler.jpg",
+    "artist": "Bdx",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Luxembourg_City_Open_Air_Cinema,_July_2025,_Knuedler.jpg",
+    "query": "open air cinema"
+  },
+  "experiences/breakfast.jpg": {
+    "title": "Casa Fitzcarraldo 2019 (4).jpg",
+    "artist": "Mayimbú",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Casa_Fitzcarraldo_2019_(4).jpg",
+    "query": "breakfast table outdoor"
+  },
+  "experiences/pizza-oven.jpg": {
+    "title": "Oven in Pompeii.jpg",
+    "artist": "Jebulon",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Oven_in_Pompeii.jpg",
+    "query": "wood fired oven"
+  },
+  "experiences/fire-pit.jpg": {
+    "title": "Soldiers at a campfire at night - Phillippe-Jaques de Louthenbourg.jpg",
+    "artist": "Paradise Chronicle",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Soldiers_at_a_campfire_at_night_-_Phillippe-Jaques_de_Louthenbourg.jpg",
+    "query": "campfire night"
+  },
+  "experiences/kids.jpg": {
+    "title": "Amsterdam, playground with playing children at the city square Frederiksplein; free photo by Fons Heijnsbroek, january 2022.jpg",
+    "artist": "FotoDutch",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Amsterdam,_playground_with_playing_children_at_the_city_square_Frederiksplein;_free_photo_by_Fons_Heijnsbroek,_january_2022.jpg",
+    "query": "children running outdoors"
+  },
+  "erin/hero.jpg": {
+    "title": "Annie L. Pressland Delphiniums Cambridge Cottage garden at Kew Gardens J Salmon postcard.jpg",
+    "artist": "Annie Pressland",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Annie_L._Pressland_Delphiniums_Cambridge_Cottage_garden_at_Kew_Gardens_J_Salmon_postcard.jpg",
+    "query": "cottage garden flowers"
+  },
+  "local/ballard.jpg": {
+    "title": "Santa Ynez Valley.JPG",
+    "artist": "Jester7777",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Santa_Ynez_Valley.JPG",
+    "query": "Santa Ynez Valley vineyard"
+  },
+  "local/sta-rita.jpg": {
+    "title": "Sta rita hills.JPG",
+    "artist": "Bradfordschultze at en.wikipedia",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Sta_rita_hills.JPG",
+    "query": "Sta. Rita Hills"
+  },
+  "local/refugio.jpg": {
+    "title": "Beach hopper collection (26922293846).jpg",
+    "artist": "Pacific Southwest Region USFWS from Sacramento, US",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Beach_hopper_collection_(26922293846).jpg",
+    "query": "Refugio State Beach"
+  },
+  "local/jalama.jpg": {
+    "title": "Atrak southbound Coast Starlight, Jalama Beach, Lompoc, CA in September 1981 -- 3 Photos (31894130826).jpg",
+    "artist": "Marty Bernard from U.S.A.",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Atrak_southbound_Coast_Starlight,_Jalama_Beach,_Lompoc,_CA_in_September_1981_--_3_Photos_(31894130826).jpg",
+    "query": "Jalama Beach"
+  },
+  "local/gaviota.jpg": {
+    "title": "YOUNGSTERS PLAY IN THE SAND AT THE GAVIOTA STATE BEACH. IN THE BACKGROUND IS THE PIER. THE AREA IS SCHEDULED FOR... - NARA - 557511.jpg",
+    "artist": "Charles O'Rear",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:YOUNGSTERS_PLAY_IN_THE_SAND_AT_THE_GAVIOTA_STATE_BEACH._IN_THE_BACKGROUND_IS_THE_PIER._THE_AREA_IS_SCHEDULED_FOR..._-_NARA_-_557511.jpg",
+    "query": "Gaviota State Park"
+  },
+  "local/cycling.jpg": {
+    "title": "Nottuln, Gladbeck, Felder -- 2024 -- 0141.jpg",
+    "artist": "Dietmar Rabich",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nottuln,_Gladbeck,_Felder_--_2024_--_0141.jpg",
+    "query": "rural road summer trees"
+  },
+  "local/dinner.jpg": {
+    "title": "GD 廣東 Guangdong 佛山 Foshan 順德 Shunde 四季炖湯 Siji Duntang Chinese Restaurant table cloth setting January 2024 R12S 02.jpg",
+    "artist": "Lau Hau Yatyue Tiger",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:GD_%E5%BB%A3%E6%9D%B1_Guangdong_%E4%BD%9B%E5%B1%B1_Foshan_%E9%A0%86%E5%BE%B7_Shunde_%E5%9B%9B%E5%AD%A3%E7%82%96%E6%B9%AF_Siji_Duntang_Chinese_Restaurant_table_cloth_setting_January_2024_R12S_02.jpg",
+    "query": "restaurant table setting"
+  },
+  "local/santa-ynez.jpg": {
+    "title": "Telephoto View of Santa Ynez Stone - panoramio.jpg",
+    "artist": "Thomas Camargo",
+    "licence": "CC BY 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Telephoto_View_of_Santa_Ynez_Stone_-_panoramio.jpg",
+    "query": "Santa Ynez California"
+  },
+  "local/market.jpg": {
+    "title": "Produce, Farmers' Market - Twickenham - London, UK - DSC07025.jpg",
+    "artist": "Daderot",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Produce,_Farmers%27_Market_-_Twickenham_-_London,_UK_-_DSC07025.jpg",
+    "query": "farmers market produce"
+  },
+  "gallery/01.jpg": {
+    "title": "Beilstein - Billensbach - Streuobstbäume im Herbstlaub mit Abendlicht.jpg",
+    "artist": "Roman Eisele",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Beilstein_-_Billensbach_-_Streuobstb%C3%A4ume_im_Herbstlaub_mit_Abendlicht.jpg",
+    "query": "orchard evening light"
+  },
+  "gallery/02.jpg": {
+    "title": "Kendall-Jackson May Farm-To-Table Dinner - Stierch 08.jpg",
+    "artist": "Sarah Stierch",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kendall-Jackson_May_Farm-To-Table_Dinner_-_Stierch_08.jpg",
+    "query": "outdoor dinner table garden"
+  },
+  "gallery/03.jpg": {
+    "title": "Earthling - Flickr - docoverachiever.jpg",
+    "artist": "Sheila Sund from Salem, United States",
+    "licence": "CC BY 2.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Earthling_-_Flickr_-_docoverachiever.jpg",
+    "query": "alpaca portrait"
+  },
+  "gallery/05.jpg": {
+    "title": "Domestic hen foraging on open ground.jpg",
+    "artist": "Confidence24",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Domestic_hen_foraging_on_open_ground.jpg",
+    "query": "pinned"
+  },
+  "gallery/07.jpg": {
+    "title": "Campfire site with logs and chairs set in a green area near trees on a sunny day in a backyard.jpg",
+    "artist": "Shixart1985",
+    "licence": "CC BY 2.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Campfire_site_with_logs_and_chairs_set_in_a_green_area_near_trees_on_a_sunny_day_in_a_backyard.jpg",
+    "query": "pinned"
+  },
+  "gallery/09.jpg": {
+    "title": "Peafowl Park beside Sun Moon Lake.jpg",
+    "artist": "Jnlin",
+    "licence": "CC BY-SA 2.5",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+    "source": "https://commons.wikimedia.org/wiki/File:Peafowl_Park_beside_Sun_Moon_Lake.jpg",
+    "query": "pinned"
+  },
+  "gallery/11.jpg": {
+    "title": "Patio Queen Emma's Summer palace.jpg",
+    "artist": "Bret Robertson",
+    "licence": "CC BY 2.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Patio_Queen_Emma%27s_Summer_palace.jpg",
+    "query": "patio terrace garden"
+  },
+  "animals/hero.jpg": {
+    "title": "Quiet Grazing in the Meadow.jpg",
+    "artist": "Soonduggyhuppy",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Quiet_Grazing_in_the_Meadow.jpg",
+    "query": "cattle grazing meadow"
+  },
+  "erin/garden.jpg": {
+    "title": "Herbaceous Border Hoveton Hall Gardens.JPG",
+    "artist": "Northmetpit",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Herbaceous_Border_Hoveton_Hall_Gardens.JPG",
+    "query": "herbaceous border"
+  },
+  "local/hero.jpg": {
+    "title": "Santa Ynez Valley.JPG",
+    "artist": "Jester7777",
+    "licence": "Public domain",
+    "licenceUrl": "",
+    "source": "https://commons.wikimedia.org/wiki/File:Santa_Ynez_Valley.JPG",
+    "query": "Santa Ynez Valley vineyard"
+  },
+  "stay/home-03.jpg": {
+    "title": "Louis Penfield House North Bedroom 1.jpg",
+    "artist": "Stilfehler",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Louis_Penfield_House_North_Bedroom_1.jpg",
+    "query": "pinned"
+  }
+}

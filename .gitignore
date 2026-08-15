@@ -1,0 +1,34 @@
+node_modules/
+dist/
+build/
+.DS_Store
+
+# Environment — never commit real secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+logs/
+
+# Editor
+.vscode/
+.idea/
+
+# Local uploads (dev only fallback)
+server/uploads/
+
+# Test / coverage
+coverage/
+
+# Media tooling scratch space
+.media-tmp/
+.media-review/
+
+# Local tool settings. `.claude/launch.json` is shared on purpose (it tells the
+# dev-server tooling how to start this project); the permission allowlist is
+# personal to whoever ran it and should not follow the repo around.
+.claude/settings.local.json
