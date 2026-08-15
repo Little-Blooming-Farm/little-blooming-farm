@@ -27,6 +27,7 @@ coverage/
 # Media tooling scratch space
 .media-tmp/
 .media-review/
+.claude
 
 # Local tool settings. `.claude/launch.json` is shared on purpose (it tells the
 # dev-server tooling how to start this project); the permission allowlist is
