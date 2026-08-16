@@ -35,6 +35,19 @@ const csv = z
 
 const noTrailingSlash = (schema) => schema.transform((v) => v.replace(/\/+$/, ''));
 
+/**
+ * An optional credential, with surrounding whitespace stripped.
+ *
+ * Copying a key out of a provider's dashboard and pasting it into a hosting
+ * dashboard routinely picks up a trailing newline. The provider then rejects
+ * the request as an invalid key, which sends you looking for the wrong problem.
+ */
+const secret = z
+  .string()
+  .optional()
+  .transform((v) => (v ? v.trim() : v))
+  .transform((v) => (v === '' ? undefined : v));
+
 const schema = z
   .object({
     NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
@@ -81,8 +94,12 @@ const schema = z
      * outbound SMTP ports, which several hosts block (Render's free tier blocks
      * 25, 465 and 587; port 25 is blocked on every Render plan). When this is
      * set the SMTP settings below are ignored entirely.
+     *
+     * Trimmed: pasting into a hosting dashboard very often carries a trailing
+     * newline or space, and Resend answers that with "API key is invalid" —
+     * which reads as a wrong key rather than a stray character.
      */
-    RESEND_API_KEY: z.string().optional(),
+    RESEND_API_KEY: secret,
 
     SMTP_HOST: z.string().optional(),
     SMTP_PORT: intWithin(1, 65535, 587),

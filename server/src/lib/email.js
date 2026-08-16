@@ -74,8 +74,27 @@ function resendTransport() {
         });
         return true;
       }
-      if (response.status === 401 || response.status === 403) {
-        throw new Error(`Resend rejected the API key — ${detail}`);
+      /**
+       * Resend reports a bad key as 400 as well as 401, so match on the message
+       * rather than the status. The commonest cause is a key that was rotated
+       * in Resend but not updated here — deleting a key invalidates it at once.
+       */
+      const rejected =
+        response.status === 401 ||
+        response.status === 403 ||
+        /api key is invalid|invalid api key|unauthorized/i.test(detail);
+
+      if (rejected) {
+        // A Resend key always starts `re_`. Anything else is a different
+        // provider's secret pasted into the wrong variable, which is worth
+        // saying outright — the message "invalid" does not suggest it.
+        const looksWrong = !/^re_/.test(env.RESEND_API_KEY ?? '');
+        throw new Error(
+          `Resend rejected the API key — ${detail}. ` +
+            (looksWrong
+              ? 'RESEND_API_KEY does not begin with "re_", so it may not be a Resend key at all.'
+              : 'Create a new key in Resend (Sending access) and update RESEND_API_KEY.')
+        );
       }
       throw new Error(`Resend ${response.status}: ${detail}`);
     },
