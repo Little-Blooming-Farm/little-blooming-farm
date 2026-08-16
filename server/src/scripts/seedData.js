@@ -279,7 +279,7 @@ export const animals = [
   {
     slug: 'cowboy',
     name: 'Cowboy',
-    species: 'Australian Shepherd',
+    species: 'Australian Cattle Dog',
     title: 'Head of arrivals',
     bio: `Cowboy hears your car before you turn off the road, and he will be waiting where the gravel starts. He has decided that greeting people is his job and he has never once called in sick.
 
@@ -291,7 +291,7 @@ If he follows you back to the house and lies across your doorway, that is the hi
       'Has never caught a peacock. Has never stopped trying.',
       'Sleeps in the shade of the olive tree between 1 and 3pm, without fail.',
     ],
-    photo: { url: '/media/animals/cowboy.jpeg', alt: 'Cowboy the Australian Shepherd on the gravel drive' },
+    photo: { url: '/media/animals/cowboy.jpeg', alt: 'Cowboy, a blue heeler, lying in the grass with his ears up' },
     order: 0,
   },
   {

@@ -21,10 +21,11 @@ const TEASERS = [
     eyebrow: 'The residents',
     title: 'Cowboy will meet you at the gate',
     body: 'Cowboy keeps an eye on things closer to home. Beyond him, the valley has its own residents: hawks circling overhead, owls calling after dark, and doves moving through the trees. Some live here. Some are just passing through. None seem particularly concerned that you booked the place.',
-    image: '/media/home/animals.jpg',
-    // TODO: Cowboy's photograph was sent in chat but is not in the media folder.
-    // Save it as client/public/media/animals/cowboy.jpeg and point this at it.
-    alt: 'The garden path leading down towards the valley',
+    image: '/media/animals/cowboy.jpeg',
+    alt: 'Cowboy, a blue heeler, lying in the grass with his ears up',
+    // A tall portrait in a 3:2 slot: centre-cropping would cut his ears off, so
+    // the crop is biased towards the top of the frame.
+    objectPosition: 'object-[50%_28%]',
   },
 ];
 
@@ -181,7 +182,7 @@ export default function Home() {
                       alt={teaser.alt}
                       ratio="3 / 2"
                       className="w-full"
-                      imgClassName="transition-transform duration-[2000ms] ease-gentle group-hover:scale-[1.04]"
+                      imgClassName={`transition-transform duration-[2000ms] ease-gentle group-hover:scale-[1.04] ${teaser.objectPosition ?? ''}`}
                     />
                   </div>
                   <div className="mt-8">
