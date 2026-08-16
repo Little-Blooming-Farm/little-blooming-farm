@@ -23,7 +23,7 @@ const TEASERS = [
     body: 'Cowboy keeps an eye on things closer to home. Beyond him, the valley has its own residents: hawks circling overhead, owls calling after dark, and doves moving through the trees. Some live here. Some are just passing through. None seem particularly concerned that you booked the place.',
     image: '/media/home/animals.jpg',
     // TODO: Cowboy's photograph was sent in chat but is not in the media folder.
-    // Save it as client/public/media/animals/cowboy.jpg and point this at it.
+    // Save it as client/public/media/animals/cowboy.jpeg and point this at it.
     alt: 'The garden path leading down towards the valley',
   },
 ];

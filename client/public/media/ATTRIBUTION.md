@@ -43,7 +43,7 @@ given here to be reproduced wherever the image is published.
 | --- | --- | --- | --- |
 | `animals/alpacas.jpg` | [Alpacas.JPG](https://commons.wikimedia.org/wiki/File:Alpacas.JPG) | Philippe Lavoie | Public domain |
 | `animals/chickens.jpg` | [Free Range Chicken.jpg](https://commons.wikimedia.org/wiki/File:Free_Range_Chicken.jpg) | safaritravelplus | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) |
-| `animals/cowboy.jpg` | [Wet Australian Shepherd dog, side view.jpg](https://commons.wikimedia.org/wiki/File:Wet_Australian_Shepherd_dog,_side_view.jpg) | Joselodos | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) |
+| `animals/cowboy.jpeg` | [Wet Australian Shepherd dog, side view.jpg](https://commons.wikimedia.org/wiki/File:Wet_Australian_Shepherd_dog,_side_view.jpg) | Joselodos | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) |
 | `animals/ducks.jpg` | [Indian runner duck looking at a camera.jpg](https://commons.wikimedia.org/wiki/File:Indian_runner_duck_looking_at_a_camera.jpg) | Daisytheduck | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | `animals/goats.jpg` | [Nigerian Dwarf goat - 02.jpg](https://commons.wikimedia.org/wiki/File:Nigerian_Dwarf_goat_-_02.jpg) | Oleg Yunakov | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | `animals/hero.jpg` | [Quiet Grazing in the Meadow.jpg](https://commons.wikimedia.org/wiki/File:Quiet_Grazing_in_the_Meadow.jpg) | Soonduggyhuppy | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |

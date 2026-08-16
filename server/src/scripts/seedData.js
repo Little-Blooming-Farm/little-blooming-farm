@@ -291,7 +291,7 @@ If he follows you back to the house and lies across your doorway, that is the hi
       'Has never caught a peacock. Has never stopped trying.',
       'Sleeps in the shade of the olive tree between 1 and 3pm, without fail.',
     ],
-    photo: { url: '/media/animals/cowboy.jpg', alt: 'Cowboy the Australian Shepherd on the gravel drive' },
+    photo: { url: '/media/animals/cowboy.jpeg', alt: 'Cowboy the Australian Shepherd on the gravel drive' },
     order: 0,
   },
   {
