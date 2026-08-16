@@ -2,21 +2,22 @@
   "name": "little-blooming-farm",
   "version": "1.0.0",
   "private": true,
-  "description": "Direct-booking site for The Little Blooming Farm — Santa Ynez",
+  "description": "Direct-booking site for The Little Blooming Farm \u2014 Santa Ynez",
   "scripts": {
     "install:all": "npm install && npm --prefix server install && npm --prefix client install",
     "demo": "concurrently -n api,web -c green,cyan -k \"npm --prefix server run dev:demo\" \"npm --prefix client run dev\"",
     "dev": "concurrently -n server,client -c green,cyan -k \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
     "dev:server": "npm --prefix server run dev",
     "dev:client": "npm --prefix client run dev",
-    "verify": "npm --prefix server run verify",
+    "verify": "npm run check:secrets && npm --prefix server run verify",
     "seed": "npm --prefix server run seed",
     "build": "npm --prefix client ci && npm --prefix client run build",
     "start": "npm --prefix server start",
     "lint": "npm --prefix client run lint",
     "build:client": "npm --prefix client ci && npm --prefix client run build",
     "build:server": "npm --prefix server ci",
-    "check:secrets": "node scripts/check-secrets.mjs"
+    "check:secrets": "node scripts/check-secrets.mjs",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

@@ -1,0 +1,14 @@
+#!/bin/sh
+# Blocks a commit that would add a real credential.
+#
+# This exists because the check was run manually, failed, and the failure was
+# not read — twice. A guard you have to remember to obey is not a guard.
+#
+# Enable once per clone:   git config core.hooksPath .githooks
+# Bypass in an emergency:  git commit --no-verify
+node scripts/check-secrets.mjs --staged || {
+  echo ""
+  echo "Commit blocked. Move real values into server/.env (gitignored)."
+  echo "If this is a false positive: git commit --no-verify"
+  exit 1
+}
