@@ -24,9 +24,13 @@ Two deployables:
 ## 0. Prerequisites
 
 ```bash
-node --version   # must be 20 or newer
+node --version   # 20–24; the repo pins 24 via .node-version
 npm --version
 ```
+
+Node is pinned to the 24 LTS line in `.node-version` and `engines`. Without a
+pin, hosts pick the newest release available — Render reached for Node 26,
+which is ahead of anything this has been verified against.
 
 Accounts needed: GitHub, MongoDB Atlas, Stripe, Render, Vercel, Cloudinary, and
 an SMTP provider (Resend, Postmark, SendGrid, Mailgun — any of them).
@@ -207,17 +211,45 @@ to `server/uploads/`.
 
 ### Manually instead
 
+> **The one setting people miss: Root Directory.** A hand-made Web Service
+> defaults to building the repo *root* with `npm install; npm run build`. This
+> is a two-app repo, so that installs only the root's own tooling and then dies
+> with:
+>
+> ```
+> sh: 1: vite: not found
+> ==> Build failed 😞   (exit status 127)
+> ```
+>
+> 127 means "command not found" — vite was never installed, because the root
+> install never touched `client/`. Set Root Directory and it goes away.
+
 Render → New → Web Service → connect the repo, then:
 
 | Setting | Value |
 | --- | --- |
-| Root Directory | `server` |
+| **Root Directory** | **`server`** |
 | Runtime | Node |
 | Build Command | `npm ci` |
 | Start Command | `npm start` |
 | Health Check Path | `/api/health` |
 
 Add every variable from `server/.env.example` under Environment.
+
+### Hosting the front end on Render too
+
+Optional — Vercel and Netlify are both fine. If you would rather keep
+everything on Render, the blueprint already defines it: Render → New → Static
+Site, or let the Blueprint create `lbf-site`.
+
+| Setting | Value |
+| --- | --- |
+| **Root Directory** | **`client`** |
+| Build Command | `npm ci && npm run build` |
+| Publish Directory | `dist` |
+| Rewrite rule | `/*` → `/index.html` (needed, or deep links 404 on refresh) |
+
+Set `VITE_API_BASE_URL` to your API's URL. Static sites are free on Render.
 
 ### Railway instead of Render
 
