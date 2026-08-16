@@ -207,6 +207,13 @@ export async function createCheckoutSession({
     bookingId,
     paymentKind: payment.kind,
     sessionId: session.id,
+    // Which methods Stripe actually accepted for this session. If Apple Pay is
+    // missing at checkout, this says whether we pinned the list or left it to
+    // the dashboard — the two have very different fixes, and guessing from the
+    // rendered page is unreliable because Stripe hides wallets silently when
+    // the device does not support them.
+    pinnedTypes: env.stripePaymentMethodTypes.length ? env.stripePaymentMethodTypes : 'dashboard',
+    acceptedTypes: session.payment_method_types,
   });
 
   return session;
