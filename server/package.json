@@ -35,7 +35,7 @@
     "zod": "^3.24.1"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20 <25"
   },
   "devDependencies": {
     "mongodb-memory-server": "^10.4.3"

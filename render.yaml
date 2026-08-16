@@ -1,11 +1,19 @@
-# Render blueprint for the API.
+# Render blueprint: the API *and*, optionally, the static site.
 #
 # Deploy: push this repo to GitHub, then in Render choose
 #   New → Blueprint → select the repo.
-# Render reads this file, creates the service, and prompts for every env var
+# Render reads this file, creates both services, and prompts for every env var
 # marked `sync: false` (those are the secrets — they are never committed).
 #
-# The front end is deployed separately on Vercel or Netlify; see DEPLOYMENT.md.
+# IMPORTANT — do not create these by hand instead. A hand-made Web Service
+# defaults to building from the repo ROOT with `npm install; npm run build`,
+# which installs only the root's own devDependency and then fails with
+# `vite: not found`. The `rootDir` values below are what make each service
+# build the right directory. If you must configure manually, set them exactly
+# as written here.
+#
+# The front end can equally go on Vercel or Netlify; see DEPLOYMENT.md. If you
+# use one of those, delete the `lbf-site` service below.
 
 services:
   - type: web
@@ -96,4 +104,45 @@ services:
       - key: CLOUDINARY_API_KEY
         sync: false
       - key: CLOUDINARY_API_SECRET
+        sync: false
+
+  # ---------------------------------------------------------------------------
+  # Static site. Delete this block if you host the front end on Vercel/Netlify.
+  # ---------------------------------------------------------------------------
+  - type: web
+    name: lbf-site
+    runtime: static
+    rootDir: client
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    autoDeploy: true
+
+    # Client-side routing: every unknown path must serve index.html, or deep
+    # links like /booking/manage/<token> 404 on refresh.
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+
+    envVars:
+      # Anything VITE_-prefixed is compiled into the bundle and is PUBLIC.
+      - key: VITE_API_BASE_URL
+        value: https://api.thelittlebloomingfarm.com
+      - key: VITE_CONTACT_EMAIL
+        value: stay@thelittlebloomingfarm.com
+      - key: VITE_WHATSAPP_NUMBER
         sync: false
