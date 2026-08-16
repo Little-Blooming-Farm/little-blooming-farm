@@ -10,13 +10,22 @@
 
 [build]
   base    = "client"
-  command = "npm ci && npm run build"
+  # `--include=dev` is not optional. vite, tailwindcss, postcss and autoprefixer
+  # are all devDependencies, and npm silently skips devDependencies whenever
+  # NODE_ENV=production is set in the build environment. The failure is
+  # `vite: not found` at the build step, long after install reports success.
+  command = "npm ci --include=dev && npm run build"
   publish = "dist"          # relative to `base`, i.e. client/dist
 
 [build.environment]
   # Also pinned in client/.node-version. Without a pin, hosts take the newest
   # release available, which is ahead of what this is verified against.
   NODE_VERSION = "24"
+  # Belt and braces with `--include=dev` above: this is the setting npm actually
+  # consults, and it survives someone adding NODE_ENV=production in the Netlify
+  # UI. Do NOT set NODE_ENV=production here — it buys nothing for a static build
+  # and only removes the tools that produce it.
+  NPM_CONFIG_INCLUDE = "dev"
 
 # Client-side routing. Every unknown path must serve index.html, or deep links
 # like /booking/manage/<token> return 404 on refresh — which would break the

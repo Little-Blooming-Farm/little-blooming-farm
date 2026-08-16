@@ -521,6 +521,27 @@ choice entirely.
       enabled for the **live** account. No Apple domain registration is needed
       for hosted Checkout.
 
+### If a build fails with `vite: not found` (exit 127)
+
+`NODE_ENV=production` is set in the **build** environment. npm reads it and
+skips devDependencies — and `vite`, `tailwindcss`, `postcss` and
+`autoprefixer` are all devDependencies, because they build the site rather than
+run in it. Install reports success, then the build step has no `vite`.
+
+The tell is in the install output: a client install that reports ~15 packages
+instead of a few hundred has dropped the toolchain.
+
+Fix — install the dev dependencies explicitly, so the command is correct
+whatever `NODE_ENV` says:
+
+```
+npm ci --include=dev && npm run build
+```
+
+Do not "fix" it by moving vite into `dependencies`; that ships build tooling
+into the runtime install. Do not unset `NODE_ENV=production` on the API either
+— the API genuinely needs it.
+
 ### If checkout fails with "No valid payment method types"
 
 Stripe refused to create the session because the account has **no payment

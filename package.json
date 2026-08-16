@@ -11,10 +11,10 @@
     "dev:client": "npm --prefix client run dev",
     "verify": "npm run check:secrets && npm --prefix server run verify",
     "seed": "npm --prefix server run seed",
-    "build": "npm --prefix client ci && npm --prefix client run build",
+    "build": "npm --prefix client ci --include=dev && npm --prefix client run build",
     "start": "npm --prefix server start",
     "lint": "npm --prefix client run lint",
-    "build:client": "npm --prefix client ci && npm --prefix client run build",
+    "build:client": "npm --prefix client ci --include=dev && npm --prefix client run build",
     "build:server": "npm --prefix server ci",
     "check:secrets": "node scripts/check-secrets.mjs",
     "prepare": "git config core.hooksPath .githooks || true"
