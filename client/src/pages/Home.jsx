@@ -11,18 +11,20 @@ const TEASERS = [
   {
     to: '/experiences',
     eyebrow: 'Experiences',
-    title: 'Feed the alpacas before breakfast',
-    body: 'The goats start complaining at seven. There are eggs in the nest boxes by nine, a pizza oven that takes two hours to come up to heat, and a fire pit that has never once been lit for less than three hours.',
+    title: 'Meet the alpacas before breakfast',
+    body: 'Six alpacas and four Nigerian dwarf goats call this place home. Mornings tend to begin with someone wandering outside to say hello, and somehow staying much longer than planned. The fire pit takes over when the sun goes down, and the gardens offer something different depending on the season.',
     image: '/media/home/experiences.jpg',
-    alt: 'A child holding out a flat palm to an alpaca',
+    alt: 'Alpacas standing in the shade at the edge of the paddock',
   },
   {
     to: '/animals',
     eyebrow: 'The residents',
     title: 'Cowboy will meet you at the gate',
-    body: 'Four alpacas, a herd of very small goats, sixteen hens, a committee of ducks, and three peacocks who arrived nine years ago and never explained themselves.',
+    body: 'Cowboy keeps an eye on things closer to home. Beyond him, the valley has its own residents: hawks circling overhead, owls calling after dark, and doves moving through the trees. Some live here. Some are just passing through. None seem particularly concerned that you booked the place.',
     image: '/media/home/animals.jpg',
-    alt: 'Cowboy the Australian Shepherd waiting on the drive',
+    // TODO: Cowboy's photograph was sent in chat but is not in the media folder.
+    // Save it as client/public/media/animals/cowboy.jpg and point this at it.
+    alt: 'The garden path leading down towards the valley',
   },
 ];
 
@@ -89,19 +91,25 @@ export default function Home() {
       <section className="bg-bloom-100">
         <div className="mx-auto max-w-4xl px-6 py-30 text-center lg:py-38">
           <Reveal>
-            <Eyebrow className="justify-center">Eleven acres, two homes</Eyebrow>
+            <Eyebrow className="justify-center">Five acres, two homes</Eyebrow>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-10 font-display text-3xl font-light leading-[1.35] text-moss-800 sm:text-4xl lg:text-[2.75rem]">
-              There is nothing to achieve here. No itinerary, no activities desk, no schedule
-              anyone will hold you to. Children work this out within about two hours. Adults take
-              until the second morning.
+              The days are allowed to unfold here.
             </p>
           </Reveal>
           <Reveal delay={0.2}>
-            <p className="prose-farm mx-auto mt-10 text-center">
-              Then something goes out of your shoulders and stays out.
-            </p>
+            <div className="prose-farm mx-auto mt-10 text-center">
+              <p>
+                Wake with the light. Wander outside barefoot. Stay at the table too long. Let the
+                kids disappear into whatever they’ve discovered. Eat when you’re hungry. Watch the
+                sun go down without needing to be anywhere next.
+              </p>
+              <p>After a while, you stop keeping track of the time.</p>
+              <p className="font-display text-xl font-light italic text-moss-800">
+                That’s usually when the good part begins.
+              </p>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -113,17 +121,19 @@ export default function Home() {
             <Reveal className="order-2 lg:order-1">
               <Eyebrow>The stay</Eyebrow>
               <h2 className="mt-6 max-w-[14ch] text-display-sm lg:text-display-md">
-                Two homes at the top of a valley
+                Two homes. Always blooming.
               </h2>
               <div className="prose-farm mt-8">
                 <p>
-                  The Home sleeps ten around one long table. The Guest House sleeps four and has
-                  its own front door, its own patio, and a kitchen garden two steps away.
+                  Vicky sleeps up to eight. The Barn sleeps up to six. Each is its own private
+                  home, with its own space to settle in and make your own.
                 </p>
                 <p>
-                  They share everything outside their walls — the orchard, the pool, the fire pit,
-                  the animals, and about forty minutes of gold light every evening.
+                  Outside, what’s blooming depends on when you arrive. The gardens shift with the
+                  seasons, changing color, texture, scent, and shape throughout the year. No two
+                  stays look quite the same.
                 </p>
+                <p>Stay in one home or bring everyone and make both yours.</p>
               </div>
               <div className="mt-10 flex flex-wrap items-center gap-8">
                 <Link to="/stay" className="btn-quiet text-moss-700">
@@ -142,13 +152,13 @@ export default function Home() {
               <div className="grid grid-cols-5 grid-rows-6 gap-4 lg:gap-5">
                 <SmartImage
                   src="/media/home/stay-primary.jpg"
-                  alt="The Home with its doors open to the orchard"
+                  alt="The covered porch running the length of Vicky, the Victorian house"
                   className="col-span-4 row-span-5 h-full w-full"
                   ratio="4 / 5"
                 />
                 <SmartImage
                   src="/media/home/stay-secondary.jpg"
-                  alt="The Guest House patio in the morning"
+                  alt="The kitchen and long table, laid for a slow morning"
                   className="col-span-3 col-start-3 row-span-3 row-start-4 h-full w-full shadow-lift"
                   ratio="1 / 1"
                 />
@@ -195,7 +205,7 @@ export default function Home() {
       <section className="relative">
         <SmartImage
           src="/media/home/land.jpg"
-          alt="The old walnut orchard in late afternoon light"
+          alt="Children playing under the old oak in late afternoon light"
           className="h-[75vh] min-h-[520px] w-full"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-moss-900/85 via-moss-900/40 to-transparent" />
@@ -226,7 +236,7 @@ export default function Home() {
             <Reveal>
               <Eyebrow>Gallery</Eyebrow>
               <h2 className="mt-6 max-w-[16ch] text-display-sm lg:text-display-md">
-                Photographs, and one drone that got carried away
+                Photographs from an ordinary week here
               </h2>
             </Reveal>
             <Reveal delay={0.1}>
@@ -239,11 +249,11 @@ export default function Home() {
           <RevealGroup className="mt-16 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5">
             {[
               { src: '/media/gallery/02.jpg', alt: 'The long table set for dinner outdoors', span: 'lg:row-span-2', ratio: '3 / 4' },
-              { src: '/media/gallery/05.jpg', alt: 'Hens in the orchard grass', ratio: '1 / 1' },
-              { src: '/media/gallery/08.jpg', alt: 'Aerial view of the property and the valley', ratio: '1 / 1' },
-              { src: '/media/gallery/07.jpg', alt: 'The fire pit after dark', ratio: '1 / 1' },
-              { src: '/media/gallery/12.jpg', alt: 'The valley at golden hour', ratio: '1 / 1' },
-              { src: '/media/gallery/04.jpg', alt: 'The pool surrounded by lavender', ratio: '1 / 1' },
+              { src: '/media/gallery/05.jpg', alt: 'A hen picking her way across the yard', ratio: '1 / 1' },
+              { src: '/media/gallery/08.jpg', alt: 'Children playing under the old oak', ratio: '1 / 1' },
+              { src: '/media/gallery/07.jpg', alt: 'A hammock strung up in the shade', ratio: '1 / 1' },
+              { src: '/media/gallery/12.jpg', alt: 'Morning light coming through the window', ratio: '1 / 1' },
+              { src: '/media/gallery/04.jpg', alt: 'Alpacas gathered at the fence', ratio: '1 / 1' },
             ].map((image) => (
               <RevealItem key={image.src} className={image.span ?? ''}>
                 <SmartImage
@@ -270,12 +280,24 @@ export default function Home() {
             </h2>
           </Reveal>
           <Reveal delay={0.2}>
-            <p className="mx-auto mt-8 max-w-[52ch] font-sans text-[17px] font-light leading-[1.9] text-bloom-100/80">
-              She was the one who kept pulling off the highway to look at properties we could not
-              afford. She was the one who stood in the long grass of a dead walnut orchard and said
-              a person could be happy here. She was right, and she did not get very long to be
-              right in.
-            </p>
+            <div className="mx-auto mt-8 max-w-[52ch] space-y-6 font-sans text-[17px] font-light leading-[1.9] text-bloom-100/80">
+              <p>
+                Erin had an instinct for beauty that shaped this place in countless ways. She
+                noticed the details most people passed over: the way a room felt, the balance of
+                texture and light, the warmth of a material, the quiet difference between something
+                that simply looked good and something that felt alive.
+              </p>
+              <p>
+                Her aesthetic was never about perfection. It was about creating spaces that felt
+                soulful, natural, welcoming, and deeply considered. The Little Blooming Farm carries
+                that sensibility throughout, in the choices, the atmosphere, and the feeling of
+                being here.
+              </p>
+              <p>
+                The Garden of Erin is a continuation of that eye for beauty and the care she
+                brought to the spaces around her.
+              </p>
+            </div>
           </Reveal>
           <Reveal delay={0.3}>
             <Link to="/garden-of-erin" className="btn-quiet on-dark mt-11 text-bloom-100">
@@ -290,12 +312,15 @@ export default function Home() {
         <div className="mx-auto max-w-editorial px-6 py-30 lg:px-12 lg:py-38">
           <Reveal className="text-center">
             <h2 className="mx-auto max-w-[16ch] text-display-sm lg:text-display-md">
-              Come and be slightly bored with us
+              Come stay awhile.
             </h2>
-            <p className="prose-farm mx-auto mt-7 text-center">
-              Two-night minimum. Booking here rather than through a listing site keeps more of it
-              on the land, and means you are talking to us directly the whole way through.
-            </p>
+            <div className="prose-farm mx-auto mt-7 text-center">
+              <p>
+                Wake up without an agenda. Wander outside. Meet the animals. See what’s blooming.
+                Sit around the fire longer than you meant to.
+              </p>
+              <p>There’s plenty to do here. None of it needs to be done.</p>
+            </div>
             <div className="mt-12">
               <Link to="/book" className="btn-quiet text-moss-700">
                 <span>See the calendar</span>

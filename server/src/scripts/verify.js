@@ -192,7 +192,7 @@ await Booking.deleteMany({});
 await Admin.deleteMany({});
 await Property.create(seedProperties);
 
-const theHome = await Property.findOne({ slug: 'the-home' });
+const theHome = await Property.findOne({ slug: 'vicky' });
 
 console.log('\n[1mThe Little Blooming Farm — verification[0m');
 
@@ -211,10 +211,10 @@ await test('GET /api/properties lists both homes without private iCal URLs', asy
   assert.ok(!('airbnbIcalUrl' in body.properties[0]), 'iCal URL must not be public');
 });
 
-await test('GET /api/properties/the-home resolves by slug', async () => {
-  const { status, body } = await api('GET', '/api/properties/the-home');
+await test('GET /api/properties/vicky resolves by slug', async () => {
+  const { status, body } = await api('GET', '/api/properties/vicky');
   assert.equal(status, 200);
-  assert.equal(body.property.slug, 'the-home');
+  assert.equal(body.property.slug, 'vicky');
 });
 
 await test('unknown property returns 404, not 500', async () => {
@@ -373,7 +373,7 @@ await test('same-day turnover is allowed (checkout day is not a booked night)', 
 });
 
 await test('the other property is unaffected by the first one being booked', async () => {
-  const guestHouse = await Property.findOne({ slug: 'the-guest-house' });
+  const guestHouse = await Property.findOne({ slug: 'the-barn' });
   const { status } = await api('POST', '/api/bookings', {
     body: {
       propertyId: guestHouse._id.toString(),
@@ -899,7 +899,7 @@ await theHome.save();
 
 section('Deposit & balance');
 
-const guestHouse = await Property.findOne({ slug: 'the-guest-house' });
+const guestHouse = await Property.findOne({ slug: 'the-barn' });
 let depositBookingId;
 let depositToken;
 

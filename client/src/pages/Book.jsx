@@ -46,7 +46,7 @@ export default function Book() {
   const homes = properties.data?.properties ?? [];
   const wasCancelled = searchParams.get('cancelled') === '1';
 
-  // Honour ?property=the-guest-house from the Stay page, then default sensibly.
+  // Honour ?property=the-barn from the Stay page, then default sensibly.
   useEffect(() => {
     if (homes.length === 0 || selectedId) return;
     const requested = searchParams.get('property');
