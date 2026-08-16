@@ -6,8 +6,66 @@ import { formatRange } from './dates.js';
 
 let transporter = null;
 
+/**
+ * Resend over HTTPS, as a nodemailer-shaped transport.
+ *
+ * Preferred over SMTP because it needs no SMTP ports. Several hosts block them
+ * outright — Render's free tier blocks 25, 465 and 587, and port 25 is blocked
+ * on every Render plan — which surfaces as a connection that hangs until it
+ * times out rather than a clear refusal.
+ */
+function resendTransport() {
+  return {
+    sendMail: async ({ from, to, subject, html, text, replyTo }) => {
+      const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from,
+          to: Array.isArray(to) ? to : [to],
+          subject,
+          html,
+          text,
+          ...(replyTo ? { reply_to: replyTo } : {}),
+        }),
+        signal: AbortSignal.timeout(15_000),
+      });
+
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(
+          `Resend ${response.status}: ${payload?.message ?? payload?.name ?? 'send failed'}`
+        );
+      }
+      return { messageId: payload.id ?? 'resend' };
+    },
+
+    // Resend has no "verify" step; a cheap authenticated GET stands in for one,
+    // and proves the key works without sending anything.
+    verify: async () => {
+      const response = await fetch('https://api.resend.com/domains', {
+        headers: { Authorization: `Bearer ${env.RESEND_API_KEY}` },
+        signal: AbortSignal.timeout(10_000),
+      });
+      if (response.status === 401 || response.status === 403) {
+        throw new Error('Resend rejected the API key');
+      }
+      if (!response.ok) throw new Error(`Resend returned ${response.status}`);
+      return true;
+    },
+  };
+}
+
 function getTransporter() {
   if (transporter) return transporter;
+
+  if (env.mailTransport === 'resend-http') {
+    transporter = resendTransport();
+    return transporter;
+  }
 
   if (!env.mailEnabled) {
     // Development without SMTP configured: log the message instead of sending,
@@ -404,13 +462,21 @@ export async function verifyMailTransport() {
         setTimeout(() => reject(new Error('timed out after 15s')), 15_000).unref()
       ),
     ]);
-    logger.info('SMTP transport ready', { host: env.SMTP_HOST });
+    logger.info('Email transport ready', {
+      via: env.mailTransport,
+      ...(env.mailTransport === 'smtp' ? { host: env.SMTP_HOST, port: env.SMTP_PORT } : {}),
+    });
     return true;
   } catch (err) {
-    logger.error(
-      'SMTP verification failed — the API is running, but emails may not send',
-      { host: env.SMTP_HOST, port: env.SMTP_PORT, error: err.message }
-    );
+    logger.error('Email transport check failed — the API is running, but emails may not send', {
+      via: env.mailTransport,
+      ...(env.mailTransport === 'smtp' ? { host: env.SMTP_HOST, port: env.SMTP_PORT } : {}),
+      error: err.message,
+      hint:
+        env.mailTransport === 'smtp'
+          ? 'Many hosts block outbound SMTP ports. Set RESEND_API_KEY to send over HTTPS instead.'
+          : undefined,
+    });
     return false;
   }
 }

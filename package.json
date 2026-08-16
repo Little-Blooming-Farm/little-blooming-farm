@@ -2,7 +2,7 @@
   "name": "little-blooming-farm",
   "version": "1.0.0",
   "private": true,
-  "description": "Direct-booking site for The Little Blooming Farm \u2014 Santa Ynez",
+  "description": "Direct-booking site for The Little Blooming Farm — Santa Ynez",
   "scripts": {
     "install:all": "npm install && npm --prefix server install && npm --prefix client install",
     "demo": "concurrently -n api,web -c green,cyan -k \"npm --prefix server run dev:demo\" \"npm --prefix client run dev\"",
@@ -15,7 +15,8 @@
     "start": "npm --prefix server start",
     "lint": "npm --prefix client run lint",
     "build:client": "npm --prefix client ci && npm --prefix client run build",
-    "build:server": "npm --prefix server ci"
+    "build:server": "npm --prefix server ci",
+    "check:secrets": "node scripts/check-secrets.mjs"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

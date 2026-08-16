@@ -65,6 +65,14 @@ const schema = z
     // Point the SDK at `stripe-mock` or a local double. Ignored in production.
     STRIPE_API_BASE: z.string().optional(),
 
+    /**
+     * Resend's HTTP API key. Preferred over SMTP where available: it needs no
+     * outbound SMTP ports, which several hosts block (Render's free tier blocks
+     * 25, 465 and 587; port 25 is blocked on every Render plan). When this is
+     * set the SMTP settings below are ignored entirely.
+     */
+    RESEND_API_KEY: z.string().optional(),
+
     SMTP_HOST: z.string().optional(),
     SMTP_PORT: intWithin(1, 65535, 587),
     SMTP_SECURE: bool(false),
@@ -101,11 +109,16 @@ const schema = z
         message: 'must list explicit origins in production (wildcard "*" is not allowed)',
       });
     }
-    if (!cfg.SMTP_HOST || !cfg.SMTP_USER || !cfg.SMTP_PASS) {
+    const hasResend = Boolean(cfg.RESEND_API_KEY);
+    const hasSmtp = Boolean(cfg.SMTP_HOST && cfg.SMTP_USER && cfg.SMTP_PASS);
+    if (!hasResend && !hasSmtp) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        path: ['SMTP_HOST'],
-        message: 'SMTP_HOST, SMTP_USER and SMTP_PASS are required in production',
+        path: ['RESEND_API_KEY'],
+        message:
+          'email is not configured. Set RESEND_API_KEY (recommended — uses HTTPS, ' +
+          'so it works even where outbound SMTP ports are blocked), or all of ' +
+          'SMTP_HOST, SMTP_USER and SMTP_PASS.',
       });
     }
     if (!cfg.CLOUDINARY_CLOUD_NAME || !cfg.CLOUDINARY_API_KEY || !cfg.CLOUDINARY_API_SECRET) {
@@ -200,7 +213,11 @@ export const env = Object.freeze({
     parsed.data.CORS_ORIGINS.length > 0
       ? parsed.data.CORS_ORIGINS
       : [parsed.data.CLIENT_URL, 'http://localhost:5173'],
-  mailEnabled: Boolean(parsed.data.SMTP_HOST && parsed.data.SMTP_USER && parsed.data.SMTP_PASS),
+  mailEnabled: Boolean(
+    parsed.data.RESEND_API_KEY ||
+      (parsed.data.SMTP_HOST && parsed.data.SMTP_USER && parsed.data.SMTP_PASS)
+  ),
+  mailTransport: parsed.data.RESEND_API_KEY ? 'resend-http' : 'smtp',
   cloudinaryEnabled: Boolean(
     parsed.data.CLOUDINARY_CLOUD_NAME &&
       parsed.data.CLOUDINARY_API_KEY &&

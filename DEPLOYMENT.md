@@ -160,23 +160,44 @@ manager. Run both processes with `npm run dev` from the repo root.
 
 ---
 
-## 4. Email (SMTP)
+## 4. Email
 
-Any provider works. Resend, as an example:
+> **Use the HTTP API, not SMTP.** Many hosts block outbound SMTP ports: Render's
+> free tier blocks 25, 465 **and** 587, and port 25 is blocked on every Render
+> plan. The symptom is not an error but a hang — the connection sits open until
+> it times out:
+>
+> ```
+> Email transport check failed … {"error":"timed out after 15s"}
+> ```
+>
+> Setting `RESEND_API_KEY` sends over HTTPS instead, which no host blocks.
 
-1. resend.com → add and verify your sending domain (add their DKIM/SPF records
-   at your DNS host).
-2. Create an API key.
+1. resend.com → **Domains** → add your domain and add the DKIM/SPF records it
+   gives you at SiteGround. Unverified senders get rejected or spam-filed.
+2. **API Keys** → create one with send permission.
 3. Set:
+
+   ```
+   RESEND_API_KEY=<your key>
+   MAIL_FROM="The Little Blooming Farm <stay@thelittlebloomingfarm.com>"
+   OWNER_NOTIFICATION_EMAIL=you@example.com
+   ```
+
+   `MAIL_FROM` must be on the domain you verified.
+
+### If you would rather use SMTP
+
+Leave `RESEND_API_KEY` blank and set the SMTP block instead. On Render this
+requires a **paid** instance, and `SMTP_SECURE` must match the port — `true`
+for 465, `false` for 587.
 
    ```
    SMTP_HOST=smtp.resend.com
    SMTP_PORT=465
    SMTP_SECURE=true
-   SMTP_USER=resend
+   SMTP_USER=resend          # the literal word, not your email
    SMTP_PASS=<your API key>
-   MAIL_FROM="The Little Blooming Farm <stay@thelittlebloomingfarm.com>"
-   OWNER_NOTIFICATION_EMAIL=you@example.com
    ```
 
 `MAIL_FROM` must be on a domain you have verified, or the mail will be rejected

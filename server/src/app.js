@@ -134,6 +134,21 @@ export function createApp() {
     res.json({ status: 'ok', time: new Date().toISOString() });
   });
 
+  /**
+   * The root is not the website — this service is the API, and the site lives
+   * at CLIENT_URL. Landing here in a browser used to return a bare JSON 404,
+   * which looks broken; say plainly what this is and point at the site.
+   */
+  app.get('/', (_req, res) => {
+    res.json({
+      service: 'The Little Blooming Farm API',
+      status: 'ok',
+      website: env.CLIENT_URL,
+      health: '/api/health',
+      note: 'This is the API. The website is at the address above.',
+    });
+  });
+
   // --- API -----------------------------------------------------------------
   app.use('/api', generalLimiter);
   app.use('/api/properties', propertyRoutes);
