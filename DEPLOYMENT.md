@@ -278,19 +278,45 @@ Railway → New Project → Deploy from GitHub. Set **Root Directory** `server`,
 build `npm ci`, start `npm start`, and add the same variables. Railway assigns
 `PORT` automatically.
 
-### After the first deploy
+### After the first deploy — populate the database
 
-Seed the content and create the owner account using Render's **Shell** tab
-(Starter plan and above):
+Until this is done the site renders with no homes and no content, because
+`/api/properties` returns `[]`.
+
+**With shell access** (Render Starter and above) — Shell tab:
 
 ```bash
 npm run seed
 npm run create-admin -- --email you@example.com
 ```
 
-No shell available (free tier)? Run them from your machine against the
-production database instead — temporarily point `MONGODB_URI` in your local
-`server/.env` at Atlas, run the two commands, then put it back.
+**Without shell access** (Render free plan — the Shell tab is paid-only), use
+the built-in bootstrap. Render → Environment, add three variables:
+
+```
+AUTO_SEED           = true
+SEED_ADMIN_EMAIL    = you@example.com
+SEED_ADMIN_PASSWORD = a-long-password-you-choose
+```
+
+Redeploy. The logs will show:
+
+```
+Auto-seed complete {"properties":{"inserted":2}, "contentPages":{"inserted":5}, ...}
+Admin account created from environment
+```
+
+Then **delete all three variables** and redeploy again. Leaving them set is not
+dangerous — seeding is idempotent and the admin is only created when none
+exists, so a redeploy cannot reset your password — but there is no reason to
+keep a password in the environment once you have signed in. Change it under
+`/admin` afterwards.
+
+**Third option** — run the commands from your own machine against the
+production database: point `MONGODB_URI` in your local `server/.env` at Atlas,
+run the two commands, then put it back. Your IP must be allowed under Atlas →
+Network Access. Note that this puts a live credential in a local file; `.env` is
+gitignored, and `npm run check:secrets` will tell you if one ever escapes.
 
 ---
 

@@ -4,6 +4,7 @@ import { connectDatabase, disconnectDatabase, ensureIndexes } from './config/db.
 import { verifyMailTransport } from './lib/email.js';
 import { startScheduledJobs, stopScheduledJobs } from './jobs/scheduler.js';
 import { createApp } from './app.js';
+import { runStartupBootstrap } from './services/bootstrap.js';
 
 // A crash that leaves the process in an unknown state is worse than a restart.
 process.on('unhandledRejection', (reason) => {
@@ -52,6 +53,11 @@ async function main() {
   if (env.isProduction) {
     ensureIndexes();
   }
+  runStartupBootstrap({
+    autoSeed: env.AUTO_SEED,
+    adminEmail: env.SEED_ADMIN_EMAIL,
+    adminPassword: env.SEED_ADMIN_PASSWORD,
+  });
   verifyMailTransport().catch((err) =>
     logger.error('SMTP verification threw', { error: err.message })
   );

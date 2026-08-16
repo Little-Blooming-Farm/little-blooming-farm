@@ -86,6 +86,17 @@ const schema = z
     CLOUDINARY_API_SECRET: z.string().optional(),
     CLOUDINARY_FOLDER: z.string().default('little-blooming-farm'),
 
+    /**
+     * Seed the shipped content on boot. For hosts with no shell — Render's
+     * Shell tab is paid-only, so on the free plan there is otherwise no way to
+     * populate the deployed database. Idempotent; safe to leave on, but the
+     * intended use is to switch it on once and then remove it.
+     */
+    AUTO_SEED: bool(false),
+    /** Creates the first admin on boot, only when no admin exists yet. */
+    SEED_ADMIN_EMAIL: z.string().optional(),
+    SEED_ADMIN_PASSWORD: z.string().optional(),
+
     BOOKING_HOLD_MINUTES: intWithin(5, 1440, 35),
     MIN_NIGHTS: intWithin(1, 30, 2),
     MAX_ADVANCE_DAYS: intWithin(30, 1825, 540),
