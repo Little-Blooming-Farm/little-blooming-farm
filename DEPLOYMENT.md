@@ -521,6 +521,33 @@ choice entirely.
       enabled for the **live** account. No Apple domain registration is needed
       for hosted Checkout.
 
+### If checkout fails with "No valid payment method types"
+
+Stripe refused to create the session because the account has **no payment
+method activated for `STRIPE_CURRENCY`**. It is a Stripe account state, not a
+bug in the site — nothing in the code can work around a dashboard with nothing
+switched on. Almost always it means the account is not finished:
+
+1. Stripe Dashboard → complete the business profile until the account is
+   activated for live payments. A live key on an unactivated account can be
+   created, but it cannot charge.
+2. Settings → Payment methods → enable **Cards** for USD.
+
+To keep taking bookings while that is in progress, set on Render:
+
+```
+STRIPE_PAYMENT_METHOD_TYPES=card
+```
+
+That pins Checkout to cards and keeps Apple Pay and Google Pay, which are
+wallet renderings of the card method rather than separate entries. Clear the
+variable once the dashboard is configured, so new methods appear without a
+redeploy.
+
+Guests never see the raw Stripe error — they get a 503 and a message saying
+payment is temporarily unavailable and their dates are still free. The
+actionable detail goes to the Render logs.
+
 ### Cancellation
 - [ ] Open the manage link from the confirmation email
 - [ ] It shows the booking and the refund you would receive today

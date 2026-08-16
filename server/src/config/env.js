@@ -62,6 +62,17 @@ const schema = z
     STRIPE_SECRET_KEY: z.string().min(1, 'STRIPE_SECRET_KEY is required'),
     STRIPE_WEBHOOK_SECRET: z.string().min(1, 'STRIPE_WEBHOOK_SECRET is required'),
     STRIPE_CURRENCY: z.string().toLowerCase().default('usd'),
+    /**
+     * Pins Checkout to an explicit payment method list. Leave BLANK normally —
+     * Stripe then offers everything enabled in the dashboard, and picks up new
+     * methods without a deploy.
+     *
+     * Set it to `card` when the account has nothing activated for the currency
+     * yet, which otherwise makes Stripe refuse to create the session at all.
+     * `card` still shows Apple Pay and Google Pay: those are wallet renderings
+     * of the card method, not separate entries in this list.
+     */
+    STRIPE_PAYMENT_METHOD_TYPES: csv,
     // Point the SDK at `stripe-mock` or a local double. Ignored in production.
     STRIPE_API_BASE: z.string().optional(),
 
@@ -229,6 +240,7 @@ export const env = Object.freeze({
       (parsed.data.SMTP_HOST && parsed.data.SMTP_USER && parsed.data.SMTP_PASS)
   ),
   mailTransport: parsed.data.RESEND_API_KEY ? 'resend-http' : 'smtp',
+  stripePaymentMethodTypes: parsed.data.STRIPE_PAYMENT_METHOD_TYPES,
   cloudinaryEnabled: Boolean(
     parsed.data.CLOUDINARY_CLOUD_NAME &&
       parsed.data.CLOUDINARY_API_KEY &&

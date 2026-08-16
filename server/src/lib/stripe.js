@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 import env from '../config/env.js';
 import logger from './logger.js';
+import { AppError } from './errors.js';
 import { formatMoney } from './pricing.js';
 import { formatRange } from './dates.js';
 
@@ -89,6 +90,46 @@ function buildLineItems({ booking, property, payment, stayLabel }) {
 }
 
 /**
+ * Create the session, translating Stripe's account-configuration failures into
+ * something a human can act on.
+ *
+ * Without this, "no payment method is activated for this currency" reaches the
+ * guest as a bare 500 — a booking looks broken when in fact the site is working
+ * and the Stripe account simply is not finished. The guest gets a truthful
+ * "payments are not available" message, and the log carries the actual fix.
+ */
+async function createSessionOrExplain(params, options) {
+  try {
+    return await stripe.checkout.sessions.create(params, options);
+  } catch (err) {
+    const misconfigured =
+      err?.type === 'StripeInvalidRequestError' &&
+      /no valid payment method types/i.test(err.message ?? '');
+
+    if (!misconfigured) throw err;
+
+    logger.error('Stripe has no payment method enabled for this currency', {
+      currency: env.STRIPE_CURRENCY,
+      pinnedTypes: env.stripePaymentMethodTypes,
+      livemode: !/^sk_test_/.test(env.STRIPE_SECRET_KEY),
+      fix:
+        'Activate the account (Stripe → complete your business profile) and enable ' +
+        `card payments for ${env.STRIPE_CURRENCY.toUpperCase()} at ` +
+        'https://dashboard.stripe.com/settings/payment_methods. To take card and ' +
+        'wallet payments meanwhile, set STRIPE_PAYMENT_METHOD_TYPES=card.',
+      stripeMessage: err.message,
+    });
+
+    throw new AppError(
+      503,
+      'PAYMENTS_UNAVAILABLE',
+      'Online payment is temporarily unavailable. Your dates are still free — ' +
+        'please get in touch and we will confirm your stay directly.'
+    );
+  }
+}
+
+/**
  * Create a Checkout Session for one instalment of a booking.
  *
  * The booking id and the instalment id travel in metadata so the webhook can
@@ -97,12 +138,24 @@ function buildLineItems({ booking, property, payment, stayLabel }) {
  * and our calendar release the dates at roughly the same moment.
  *
  * ---- Wallets / Apple Pay -------------------------------------------------
- * `payment_method_types` is deliberately NOT set. Naming it pins Checkout to
- * that list and suppresses everything else; omitting it lets Stripe offer every
- * method enabled in the dashboard, which is what renders Apple Pay and Google
- * Pay as the first, full-width button above the card form on a supporting
- * device. Nothing else is required for Apple Pay on hosted Checkout — Stripe
- * owns checkout.stripe.com, so the Apple domain association already exists.
+ * By default `payment_method_types` is NOT set, so Checkout offers whatever is
+ * enabled in the dashboard. That is the better setup when the account is fully
+ * configured: it picks up Link, Cash App and the rest without a code change.
+ *
+ * Apple Pay and Google Pay are NOT separate entries in that list — they have no
+ * `payment_method_types` enum at all. They are wallet presentations of `card`,
+ * so they appear as the first, full-width button above the card form whenever
+ * `card` is available and the device supports it. Naming `card` explicitly does
+ * not suppress them. (An earlier version of this comment claimed it did, and
+ * that was wrong.) Nothing else is needed for Apple Pay on hosted Checkout —
+ * Stripe owns checkout.stripe.com, so the Apple domain association exists.
+ *
+ * The dashboard-driven default has one sharp edge: if the account has no method
+ * activated for STRIPE_CURRENCY — which is the normal state of an account whose
+ * business profile has not been completed — Stripe refuses to create the
+ * session at all. STRIPE_PAYMENT_METHOD_TYPES is the escape hatch: set it to
+ * `card` to pin the list and keep taking cards and wallets while the account
+ * is being activated.
  */
 export async function createCheckoutSession({
   booking,
@@ -116,7 +169,7 @@ export async function createCheckoutSession({
   const bookingId = booking._id.toString();
   const paymentId = payment._id ? payment._id.toString() : payment.kind;
 
-  const session = await stripe.checkout.sessions.create(
+  const session = await createSessionOrExplain(
     {
       mode: 'payment',
       line_items: buildLineItems({ booking, property, payment, stayLabel }),
@@ -141,6 +194,9 @@ export async function createCheckoutSession({
         successPath ?? `${env.CLIENT_URL}/booking/confirmed?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: cancelPath ?? `${env.CLIENT_URL}/book?cancelled=1&property=${property.slug}`,
       ...(expiresAt ? { expires_at: Math.floor(expiresAt.getTime() / 1000) } : {}),
+      ...(env.stripePaymentMethodTypes.length
+        ? { payment_method_types: env.stripePaymentMethodTypes }
+        : {}),
     },
     // One session per instalment. A retried request reuses the same session
     // rather than creating a second one the guest could also pay.
