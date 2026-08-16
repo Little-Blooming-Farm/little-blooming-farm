@@ -4,7 +4,7 @@ Two deployables:
 
 | Piece | Lives in | Goes to | Address |
 | --- | --- | --- | --- |
-| React site | `/client` | Vercel (or Netlify) | `www.thelittlebloomingfarm.com` |
+| React site | `/client` | Netlify (or Vercel) | `www.thelittlebloomingfarm.com` |
 | Express API | `/server` | Render (or Railway) | `api.thelittlebloomingfarm.com` |
 | Database | — | MongoDB Atlas | — |
 | Images & video | — | Cloudinary | — |
@@ -32,7 +32,7 @@ Node is pinned to the 24 LTS line in `.node-version` and `engines`. Without a
 pin, hosts pick the newest release available — Render reached for Node 26,
 which is ahead of anything this has been verified against.
 
-Accounts needed: GitHub, MongoDB Atlas, Stripe, Render, Vercel, Cloudinary, and
+Accounts needed: GitHub, MongoDB Atlas, Stripe, Render, Netlify, Cloudinary, and
 an SMTP provider (Resend, Postmark, SendGrid, Mailgun — any of them).
 
 ---
@@ -294,31 +294,67 @@ production database instead — temporarily point `MONGODB_URI` in your local
 
 ---
 
-## 7. Deploy the site to Vercel
+## 7. Deploy the site to Netlify
 
-1. Vercel → **Add New → Project** → import the repo.
-2. **Root Directory: `client`.** This matters — the repo has two apps.
-3. Framework preset: Vite. Build `npm run build`, output `dist`
-   (`client/vercel.json` already sets all of this).
-4. Environment Variables:
+1. Netlify → **Add new site → Import an existing project** → pick the repo.
+2. Netlify reads **`netlify.toml` at the repository root**, which already sets
+   everything:
+
+   | Setting | Value | Set by |
+   | --- | --- | --- |
+   | Base directory | `client` | `netlify.toml` |
+   | Build command | `npm ci && npm run build` | `netlify.toml` |
+   | Publish directory | `client/dist` | `netlify.toml` |
+   | Node version | 24 | `netlify.toml` + `client/.node-version` |
+
+   > The config file must stay at the **repo root**. Netlify does not read a
+   > `netlify.toml` inside the base directory — a copy in `client/` is silently
+   > ignored, and you lose the SPA redirect and every security header with it.
+
+3. **Site configuration → Environment variables**:
 
    ```
-   VITE_API_BASE_URL = https://api.thelittlebloomingfarm.com
-   VITE_CONTACT_EMAIL = stay@thelittlebloomingfarm.com
+   VITE_API_BASE_URL   = https://api.thelittlebloomingfarm.com
+   VITE_CONTACT_EMAIL  = stay@thelittlebloomingfarm.com
    VITE_WHATSAPP_NUMBER = 18055550100
    ```
 
    Anything prefixed `VITE_` is compiled into the JavaScript bundle and is
    **public**. Never put a secret key there.
-5. Deploy.
 
-`vercel.json` already rewrites unknown paths to `index.html`, so deep links like
-`/booking/manage/<token>` survive a refresh.
+4. Deploy. Every push to `main` rebuilds automatically.
 
-### Netlify instead
+Deep links survive a refresh through two independent mechanisms: the redirect
+rule in `netlify.toml`, and `client/public/_redirects`, which ships inside the
+build output. Either alone is enough; both is deliberate, because a guest's
+`/booking/manage/<token>` link 404-ing is the worst failure this site has.
 
-`client/netlify.toml` covers it. Set the base directory to `client` and add the
-same `VITE_` variables.
+### ⚠️ The `netlify.app` subdomain will break admin login
+
+Until you attach your own domain, the site is on `something.netlify.app` and the
+API on `something.onrender.com`. Those are **different registrable domains**, so
+the admin session cookie is third-party — the browser refuses to send it, and
+`/admin` login appears to succeed then bounces you straight back.
+
+The API refuses to boot in that configuration rather than misbehave, and tells
+you which variable to change. Two ways forward:
+
+- **Recommended:** attach `www.thelittlebloomingfarm.com` to Netlify and
+  `api.thelittlebloomingfarm.com` to Render. Same registrable domain, so
+  `COOKIE_SAMESITE=lax` works and the cookie stays first-party.
+- **Interim, for testing on the free subdomains:** set `COOKIE_SAMESITE=none` on
+  Render. Works today, but some browsers block third-party cookies outright, so
+  it is not a launch configuration.
+
+Either way, `CORS_ORIGINS` on Render must list the exact origin the site is
+served from — including `https://` and any `www.`. A missing entry shows up as
+a CORS error in the browser console and an empty page.
+
+### Vercel instead
+
+`client/vercel.json` is still in the repo and configures the same thing. Import
+the project, **set Root Directory to `client`**, and add the same `VITE_`
+variables. The two config files do not conflict; each host reads only its own.
 
 ---
 

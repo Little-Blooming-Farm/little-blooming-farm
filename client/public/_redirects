@@ -1,0 +1,4 @@
+# Single-page app fallback. Mirrors the rule in the root netlify.toml; this one
+# travels inside the build output, so deep links survive even if that config is
+# not picked up.
+/*    /index.html   200
