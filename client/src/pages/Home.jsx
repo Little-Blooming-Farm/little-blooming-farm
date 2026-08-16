@@ -203,30 +203,54 @@ export default function Home() {
       </section>
 
       {/* ------------------------------------------------------------- The Land */}
-      <section className="relative">
-        <SmartImage
-          src="/media/home/land.jpg"
-          alt="Children playing under the old oak in late afternoon light"
-          className="h-[75vh] min-h-[520px] w-full"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-moss-900/85 via-moss-900/40 to-transparent" />
-        <div className="absolute inset-0 flex items-end">
-          <div className="mx-auto w-full max-w-editorial px-6 pb-16 lg:px-12 lg:pb-22">
-            <Reveal className="max-w-xl text-bloom-50">
-              <Eyebrow className="text-bloom-100/70">The land</Eyebrow>
-              <h2 className="mt-6 text-display-sm text-bloom-50 lg:text-display-md">
-                A walnut orchard that stopped paying in 1978
-              </h2>
-              <p className="mt-6 font-sans text-lg font-light leading-relaxed text-bloom-100/85">
-                Half of it went back to grass. The rest is old, gnarled, and still producing more
-                walnuts than any household can reasonably use. We have been slowly bringing the
-                whole thing back ever since.
+      {/*
+        The photograph stays full-bleed, but the copy sits in the dark band
+        below it rather than on top. Five paragraphs overlaid on a picture is
+        unreadable on a phone — the previous single paragraph already filled
+        the frame there — and the gradient carries the image into the band so
+        the two still read as one unit.
+      */}
+      <section className="bg-moss-900 text-bloom-100">
+        <div className="relative">
+          <SmartImage
+            src="/media/home/land.jpg"
+            alt="Children playing under the old oak in late afternoon light"
+            className="h-[46vh] min-h-[300px] w-full lg:h-[62vh]"
+          />
+          <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-moss-900 to-transparent" />
+        </div>
+
+        <div className="mx-auto max-w-editorial px-6 pb-22 pt-10 lg:px-12 lg:pb-30 lg:pt-14">
+          <Reveal className="max-w-2xl">
+            <Eyebrow className="text-bloom-100/70">The land</Eyebrow>
+            <h2 className="mt-6 max-w-[18ch] text-display-sm text-bloom-50 lg:text-display-md">
+              Five acres along an old road through the valley
+            </h2>
+            <div className="mt-8 space-y-6 font-sans text-lg font-light leading-relaxed text-bloom-100/85">
+              <p>
+                Refugio has been a passage between the coast and the Santa Ynez Valley for
+                generations. The land around it has changed many times, from open range and early
+                agriculture to orchards, gardens and vineyards.
               </p>
-              <Link to="/the-land" className="btn-quiet on-dark mt-9 text-bloom-50">
-                <span>The whole story</span>
-              </Link>
-            </Reveal>
-          </div>
+              <p>The Little Blooming Farm sits on five acres along that old route.</p>
+              <p>
+                Today, the land is always becoming something new. Gardens are planted and
+                replanted. Flowers arrive with the seasons. Six alpacas and four Nigerian dwarf
+                goats wander the property. Two homes, including a century-old barn, have been
+                thoughtfully brought into their next chapter.
+              </p>
+              <p>
+                We call it The Little Blooming Farm because nothing here stays exactly the same for
+                long.
+              </p>
+              <p className="font-display text-2xl font-light italic text-bloom-50 lg:text-3xl">
+                Something is always blooming.
+              </p>
+            </div>
+            <Link to="/the-land" className="btn-quiet on-dark mt-11 text-bloom-50">
+              <span>The whole story</span>
+            </Link>
+          </Reveal>
         </div>
       </section>
 

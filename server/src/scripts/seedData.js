@@ -631,11 +631,11 @@ Do all of it or none of it. The most common thing guests tell us afterwards is t
   {
     slug: 'the-land',
     title: 'The Land',
-    subtitle: 'Eleven acres in the Santa Ynez Valley, and what happened to them.',
+    subtitle: 'Five acres in the Santa Ynez Valley, and what happened to them.',
     seo: {
       title: 'The Land — The Little Blooming Farm',
       description:
-        'The history, the gardens, the animals, and what makes eleven acres in the Santa Ynez Valley feel the way this place feels.',
+        'The history, the gardens, the animals, and what makes five acres in the Santa Ynez Valley feel the way this place feels.',
     },
     heroImage: '/media/land/hero.jpg',
     sections: [
@@ -754,7 +754,7 @@ Children run through it constantly. This is correct and we would like it to cont
           heading: 'How guests keep it going',
           body: `The farm exists because of her, and it stays open because of you.
 
-Every booking made directly through this site — rather than through a listing site that takes its cut — goes further toward keeping eleven acres, two houses, and a great many animals in good order. That is the whole of it. There is no fund to donate to and nothing to sign up for.
+Every booking made directly through this site — rather than through a listing site that takes its cut — goes further toward keeping five acres, two houses, and a great many animals in good order. That is the whole of it. There is no fund to donate to and nothing to sign up for.
 
 Come, stay, let your children get filthy, cut the flowers, and leave the gate as you found it. That is what keeps the legacy going. It turns out to be enough.`,
         },
