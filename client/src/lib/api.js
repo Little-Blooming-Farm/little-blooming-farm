@@ -94,6 +94,8 @@ export const adminChangePassword = (currentPassword, newPassword) =>
   api.post('/api/admin/change-password', { currentPassword, newPassword });
 
 export const adminDashboard = () => api.get('/api/admin/dashboard');
+/** Sends a test message to the signed-in admin's own address. */
+export const adminSendTestEmail = () => api.post('/api/admin/test-email');
 
 export const adminProperties = () => api.get('/api/admin/properties');
 export const adminProperty = (id) => api.get(`/api/admin/properties/${id}`);

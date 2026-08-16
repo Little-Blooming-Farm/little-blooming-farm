@@ -1,10 +1,59 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { adminDashboard } from '../lib/api.js';
+import { adminDashboard, adminSendTestEmail } from '../lib/api.js';
 import useAsync from '../hooks/useAsync.js';
 import { ErrorState, LoadingState } from '../components/ui.jsx';
-import { AdminPage, Card, EmptyState, Stat, StatusPill, Table, Td } from './components.jsx';
+import { AdminPage, Banner, Button, Card, EmptyState, Stat, StatusPill, Table, Td } from './components.jsx';
 import { formatDate, formatDateRange, formatMoney } from '../lib/format.js';
+
+/**
+ * Proves the mail path end to end without having to take a real booking.
+ *
+ * It always sends to the signed-in admin, never to a typed address — the
+ * server enforces that too, but there is no reason to offer a box that invites
+ * the question.
+ */
+function EmailCheck() {
+  const [state, setState] = useState(null);
+  const [sending, setSending] = useState(false);
+
+  const run = async () => {
+    setSending(true);
+    setState(null);
+    try {
+      const result = await adminSendTestEmail();
+      setState({
+        tone: 'moss',
+        text: `Sent to ${result.to} via ${result.via}, from ${result.from}. If it does not arrive within a minute, check spam.`,
+      });
+    } catch (err) {
+      setState({ tone: 'clay', text: err.message });
+    } finally {
+      setSending(false);
+    }
+  };
+
+  return (
+    <Card>
+      <h2 className="font-display text-xl font-light text-moss-800">Email</h2>
+      <p className="mt-2 font-sans text-[14px] font-light text-ink-muted">
+        Sends a test message to your own address, using exactly the transport guest
+        confirmations use.
+      </p>
+      {state && (
+        <div className="mt-4">
+          <Banner tone={state.tone}>{state.text}</Banner>
+        </div>
+      )}
+      <div className="mt-5">
+        <Button onClick={run} disabled={sending}>
+          {sending ? 'Sending…' : 'Send test email'}
+        </Button>
+      </div>
+    </Card>
+  );
+}
 
 function ArrivalList({ title, bookings, dateKey, emptyText }) {
   return (
@@ -159,6 +208,10 @@ export default function Dashboard() {
             </p>
           </Card>
         ))}
+      </div>
+
+      <div className="mt-8">
+        <EmailCheck />
       </div>
     </AdminPage>
   );

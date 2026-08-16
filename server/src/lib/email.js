@@ -170,6 +170,31 @@ async function send({ to, subject, html, text, replyTo }) {
   }
 }
 
+/**
+ * A diagnostic send that deliberately does NOT swallow failures.
+ *
+ * `send` above returns null on error, because a mail outage must never fail a
+ * booking. That behaviour is exactly wrong here: when you are testing the mail
+ * path, the provider's error message is the entire point, so it is allowed to
+ * throw and the caller reports it verbatim.
+ */
+export async function sendTestEmail({ to }) {
+  const info = await getTransporter().sendMail({
+    from: env.MAIL_FROM,
+    to,
+    subject: 'Test email — The Little Blooming Farm',
+    text:
+      'This is a test message from your booking site.\n\n' +
+      `Sent via: ${env.mailTransport}\nFrom: ${env.MAIL_FROM}\n\n` +
+      'If this arrived, guest confirmations and balance reminders will send too.',
+    html: `<p>This is a test message from your booking site.</p>
+<p style="color:#6b6b6b;font-size:14px">Sent via <strong>${env.mailTransport}</strong><br>From <strong>${env.MAIL_FROM}</strong></p>
+<p>If this arrived, guest confirmations and balance reminders will send too.</p>`,
+  });
+  logger.info('Test email sent', { to, messageId: info.messageId });
+  return info;
+}
+
 // --- Shared shell -----------------------------------------------------------
 
 const COLORS = {

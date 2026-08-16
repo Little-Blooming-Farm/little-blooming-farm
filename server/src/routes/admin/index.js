@@ -14,6 +14,7 @@ import animalRoutes from './animals.js';
 import contentRoutes from './content.js';
 import experienceRoutes from './experiences.js';
 import mediaRoutes from './media.js';
+import diagnosticsRoutes from './diagnostics.js';
 
 const router = express.Router();
 
@@ -41,6 +42,7 @@ router.use('/animals', animalRoutes);
 router.use('/content', contentRoutes);
 router.use('/experiences', experienceRoutes);
 router.use('/media', mediaRoutes);
+router.use('/', diagnosticsRoutes);
 
 /** POST /api/admin/maintenance/sync-calendars — run every OTA sync now. */
 router.post(
