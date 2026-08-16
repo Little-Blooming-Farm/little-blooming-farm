@@ -74,11 +74,23 @@ export async function seedAdminFromEnv({ email, password }) {
     return { created: false, reason: 'password too short' };
   }
 
-  const existingCount = await Admin.countDocuments();
-  if (existingCount > 0) return { created: false, reason: 'an admin already exists' };
+  /**
+   * Keyed on the address, not on "are there any admins at all".
+   *
+   * The safety property worth keeping is that a redeploy must never silently
+   * reset someone's password — so an address that already exists is left
+   * completely alone. Checking the address rather than the count also makes
+   * this the way to add a *second* admin on a host with no shell, which is
+   * otherwise impossible on Render's free plan.
+   */
+  const address = email.trim().toLowerCase();
+  const existing = await Admin.findOne({ email: address });
+  if (existing) {
+    return { created: false, reason: `${address} already exists — password left unchanged` };
+  }
 
   const admin = await Admin.create({
-    email: email.toLowerCase(),
+    email: address,
     passwordHash: await Admin.hashPassword(password),
     role: 'owner',
   });
