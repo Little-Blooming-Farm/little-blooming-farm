@@ -92,7 +92,7 @@ const SLOTS = [
 
   // ---- Animals ------------------------------------------------------------
   { group: 'animals', file: 'animals/hero.jpg', w: 2400, h: 1350, q: ['sheep pasture farm', 'cattle grazing meadow', 'livestock field fence'] },
-  { group: 'animals', file: 'animals/cowboy.jpg', w: 1200, h: 1500, q: ['Australian Shepherd dog grass', 'Australian Shepherd standing', 'Australian Shepherd'] },
+  { group: 'animals', file: 'animals/cowboy.jpeg', w: 1200, h: 1500, q: ['Australian Shepherd dog grass', 'Australian Shepherd standing', 'Australian Shepherd'] },
   { group: 'animals', file: 'animals/alpacas.jpg', w: 1200, h: 1500, q: ['alpaca', 'Vicugna pacos', 'alpaca farm'] },
   { group: 'animals', file: 'animals/goats.jpg', w: 1200, h: 1500, q: ['Nigerian Dwarf goat', 'goat kid', 'domestic goat'] },
   { group: 'animals', file: 'animals/chickens.jpg', w: 1200, h: 1500, q: ['free range chicken', 'hen grass', 'chicken farm'] },

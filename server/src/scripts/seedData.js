@@ -8,19 +8,19 @@
 
 export const properties = [
   {
-    slug: 'the-home',
-    name: 'The Home',
-    tagline: 'The big house, the long table, the whole family under one roof.',
+    slug: 'vicky',
+    name: 'Vicky',
+    tagline: 'The Victorian house, the long table, the whole family under one roof.',
     shortDescription:
-      'Four bedrooms, a kitchen built for slow mornings, and doors that open onto the orchard. Sleeps ten.',
-    description: `The Home sits at the top of the property, facing west, so the last hour of light comes through the kitchen and lands on the long table. That table is the point of the house. Most of what happens here happens around it.
+      'Four bedrooms, a kitchen built for slow mornings, and a porch that runs the length of the house. Sleeps eight.',
+    description: `Vicky is the Victorian house, sitting at the top of the property and facing west, so the last hour of light comes through the kitchen and lands on the long table. That table is the point of the house. Most of what happens here happens around it.
 
 There are four bedrooms — two upstairs under the eaves, two on the ground floor with doors to the garden. The kitchen is stocked properly: real knives, a heavy pot, enough bowls for everyone at once. There is a fireplace that draws well and a stack of dry oak beside it.
 
 Outside, a covered porch runs the length of the house. The pool and spa are a short walk down through the lavender. The chickens will find you before you find them.
 
 It is a house that asks very little of you. That is the whole idea.`,
-    maxGuests: 10,
+    maxGuests: 8,
     bedrooms: 4,
     bathrooms: 3,
     beds: 6,
@@ -64,7 +64,7 @@ It is a house that asks very little of you. That is the whole idea.`,
     address: 'Roblar Avenue, Santa Ynez, CA 93460',
     rentalAgreement: {
       version: 1,
-      title: 'Rental Agreement — The Home',
+      title: 'Rental Agreement — Vicky',
       requireAcceptance: true,
       body: `SHORT-TERM RENTAL AGREEMENT
 
@@ -144,27 +144,29 @@ By typing their name, the Guest confirms they have read and accept this agreemen
       ],
     },
     photos: [
-      { url: '/media/stay/home-01.jpg', alt: 'The Home at golden hour, doors open to the orchard', order: 0 },
+      { url: '/media/stay/home-01.jpg', alt: 'The covered porch running the length of Vicky', order: 0 },
       { url: '/media/stay/home-02.jpg', alt: 'The long kitchen table set for dinner', order: 1 },
       { url: '/media/stay/home-03.jpg', alt: 'An upstairs bedroom under the eaves', order: 2 },
       { url: '/media/stay/home-04.jpg', alt: 'The covered porch looking west', order: 3 },
     ],
   },
   {
-    slug: 'the-guest-house',
-    name: 'The Guest House',
-    tagline: 'Small, quiet, and entirely your own.',
+    slug: 'the-barn',
+    name: 'The Barn',
+    tagline: 'A hundred-year-old barn, quiet and entirely your own.',
     shortDescription:
-      'A two-bedroom cottage at the edge of the garden. For couples, or for the half of the family that wants its own door.',
-    description: `The Guest House was the original building on the property. It is small on purpose. Two bedrooms, one bathroom, a kitchen that does everything you need it to and nothing you don't.
+      'The hundred-year-old barn house at the edge of the garden. For couples, or for the half of the family that wants its own door.',
+    description: `The Barn is the oldest building on the property — a hundred-year-old barn, kept as a barn and made to live in. A kitchen that does everything you need it to and nothing you don't.
 
-It sits low at the edge of the kitchen garden, which means you can pick your own breakfast in your slippers. There is a private patio with two chairs and a table, angled at the oaks, and it gets the morning sun.
+It sits low at the edge of the kitchen garden, which means you can pick your own breakfast in your slippers. There is a private patio with a table and chairs, angled at the oaks, and it gets the morning sun.
 
-People book it for two and stay quiet the entire time. People also book it alongside The Home when the family is large and someone wants their own front door. Both are right.`,
-    maxGuests: 4,
-    bedrooms: 2,
+People book it for two and stay quiet the entire time. People also book it alongside Vicky when the family is large and someone wants their own front door. Both are right.`,
+    // TODO: confirm with the owner. Sleeps six is from the revised copy; the room
+    // and bed counts below are a coherent guess, not something they told us.
+    maxGuests: 6,
+    bedrooms: 3,
     bathrooms: 1,
-    beds: 2,
+    beds: 3,
     basePriceCents: 47500,
     cleaningFeeCents: 20000,
     minNights: 2,
@@ -199,7 +201,7 @@ People book it for two and stay quiet the entire time. People also book it along
     address: 'Roblar Avenue, Santa Ynez, CA 93460',
     rentalAgreement: {
       version: 1,
-      title: 'Rental Agreement — The Guest House',
+      title: 'Rental Agreement — The Barn',
       requireAcceptance: true,
       body: `SHORT-TERM RENTAL AGREEMENT
 
@@ -266,7 +268,7 @@ By typing their name, the Guest confirms they have read and accept this agreemen
       ],
     },
     photos: [
-      { url: '/media/stay/guest-01.jpg', alt: 'The Guest House at the edge of the kitchen garden', order: 0 },
+      { url: '/media/stay/guest-01.jpg', alt: 'The Barn porch, looking out over the valley', order: 0 },
       { url: '/media/stay/guest-02.jpg', alt: 'The private patio in morning light', order: 1 },
       { url: '/media/stay/guest-03.jpg', alt: 'The bedroom, with windows onto the oaks', order: 2 },
     ],
@@ -277,7 +279,7 @@ export const animals = [
   {
     slug: 'cowboy',
     name: 'Cowboy',
-    species: 'Australian Shepherd',
+    species: 'Australian Cattle Dog',
     title: 'Head of arrivals',
     bio: `Cowboy hears your car before you turn off the road, and he will be waiting where the gravel starts. He has decided that greeting people is his job and he has never once called in sick.
 
@@ -289,7 +291,7 @@ If he follows you back to the house and lies across your doorway, that is the hi
       'Has never caught a peacock. Has never stopped trying.',
       'Sleeps in the shade of the olive tree between 1 and 3pm, without fail.',
     ],
-    photo: { url: '/media/animals/cowboy.jpg', alt: 'Cowboy the Australian Shepherd on the gravel drive' },
+    photo: { url: '/media/animals/cowboy.jpeg', alt: 'Cowboy, a blue heeler, lying in the grass with his ears up' },
     order: 0,
   },
   {
@@ -297,7 +299,9 @@ If he follows you back to the house and lies across your doorway, that is the hi
     name: 'The Alpacas',
     species: 'Huacaya alpacas',
     title: 'Ridiculous, dignified',
-    bio: `There are four of them: Juniper, Basil, Pockets, and a large cream-coloured one the children named Meatball, which stuck.
+    // TODO: owner to confirm names. The revised copy says six alpacas; only four
+    // were ever named in this placeholder text.
+    bio: `There are six of them, including Juniper, Basil, Pockets, and a large cream-coloured one the children named Meatball, which stuck.
 
 Alpacas are cautious animals with excellent manners. They will not take food from your hand unless they have decided about you first, which usually takes about four minutes and a lot of staring. Hold your palm flat, stay still, and let them come. They always come.
 
@@ -307,7 +311,7 @@ They hum. Not loudly — a soft, questioning sound, mostly to each other. Once y
       'They all use the same communal dung pile, which is either very tidy or very strange.',
       'Their fleece is sheared each spring and spun locally.',
     ],
-    photo: { url: '/media/animals/alpacas.jpg', alt: 'Four alpacas at the fence line in morning light' },
+    photo: { url: '/media/animals/alpacas.jpg', alt: 'Alpacas at the fence line in morning light' },
     order: 1,
   },
   {
@@ -315,7 +319,7 @@ They hum. Not loudly — a soft, questioning sound, mostly to each other. Once y
     name: 'The Goats',
     species: 'Nigerian Dwarf goats',
     title: 'The morning shift',
-    bio: `Small, loud, and entirely without shame. The goats are the reason children wake up early here.
+    bio: `Four Nigerian dwarf goats — small, loud, and entirely without shame. They are the reason children wake up early here.
 
 They come to the gate at around seven, complaining, and they will keep complaining until someone arrives with the grain scoop. Once fed, they become charming — they will climb anything, including you, and they will headbutt each other over a rock they have all agreed is important.
 
@@ -386,8 +390,8 @@ Fair warning: they roost in the oaks and they call at night. It is a strange, wi
 
 export const experiences = [
   {
-    slug: 'feed-the-alpacas',
-    title: 'Feed the alpacas',
+    slug: 'meet-the-alpacas',
+    title: 'Meet the alpacas before breakfast',
     category: 'animals',
     season: 'Year-round',
     duration: '20 minutes, or an hour',
@@ -527,7 +531,7 @@ export const contentPages = [
     seo: {
       title: 'Stay — The Little Blooming Farm',
       description:
-        'The Home sleeps ten. The Guest House sleeps four. Both open onto the same orchard, garden, pool and animals.',
+        'Vicky sleeps eight. The Barn sleeps six. Both open onto the same garden, orchard and animals.',
     },
     heroImage: '/media/stay/hero.jpg',
     sections: [
@@ -538,7 +542,7 @@ export const contentPages = [
           heading: 'Two homes',
           body: `There are two places to stay here and they share everything outside their own walls — the orchard, the garden, the pool, the fire pit, the animals, the quiet.
 
-Take The Home if you are a family or two, or a group who want to eat together every night. Take The Guest House if you are two people who want a door of your own and very little else. Take both if you are all coming and someone needs their own kettle.`,
+Take Vicky if you are a family or two, or a group who want to eat together every night. Take The Barn if you are two people who want a door of your own and very little else. Take both if you are all coming and someone needs their own kettle.`,
         },
       },
       { type: 'spacer', order: 1, content: { size: 'lg' } },
@@ -549,9 +553,9 @@ Take The Home if you are a family or two, or a group who want to eat together ev
           heading: 'Bedrooms',
           imagePosition: 'left',
           image: { url: '/media/stay/bedrooms.jpg', alt: 'A bedroom with linen curtains and morning light' },
-          body: `Six beds across The Home, two in The Guest House. Linen sheets, wool blankets, blackout curtains in the rooms that need them.
+          body: `Six beds across Vicky, three in The Barn. Linen sheets, wool blankets, blackout curtains in the rooms that need them.
 
-The two upstairs rooms in The Home are under the eaves and have the best light in the morning. The ground-floor rooms open directly onto the garden, which is the right choice if you are travelling with someone small who wakes early.`,
+The two upstairs rooms in Vicky are under the eaves and have the best light in the morning. The ground-floor rooms open directly onto the garden, which is the right choice if you are travelling with someone small who wakes early.`,
         },
       },
       {
@@ -560,7 +564,7 @@ The two upstairs rooms in The Home are under the eaves and have the best light i
         content: {
           heading: 'The pool',
           imagePosition: 'right',
-          image: { url: '/media/stay/pool.jpg', alt: 'The pool surrounded by lavender' },
+          image: { url: '/media/stay/pool.jpg', alt: 'Alpacas gathered at the fence' },
           body: `Heated from April to October, surrounded by lavender that hums audibly with bees on a hot afternoon.
 
 It is not fenced. If you are bringing children who cannot swim, please tell us before you arrive and we will put up the temporary fence before you come.`,
@@ -642,7 +646,7 @@ Do all of it or none of it. The most common thing guests tell us afterwards is t
           heading: 'Before it was ours',
           body: `The property was a working walnut orchard from the 1920s until sometime in the late seventies, when the trees stopped paying and the family who owned them stopped replanting. By the time we found it, about half the orchard had gone back to grass and the rest was old, gnarled, and still producing more walnuts than any household could use.
 
-The original building — now The Guest House — was the farm office. It has a concrete floor under the boards and a wall that is eighteen inches thick for no reason anyone has been able to explain.`,
+The original building — now The Barn — was the farm office. It has a concrete floor under the boards and a wall that is eighteen inches thick for no reason anyone has been able to explain.`,
         },
       },
       {
@@ -660,7 +664,7 @@ The original building — now The Guest House — was the farm office. It has a 
           heading: 'The gardens',
           body: `There are three, and they do different jobs.
 
-The kitchen garden sits below The Guest House in eight raised beds, and it is the one guests use. It is planted for continuous picking rather than for a single big harvest, which means there is almost always something worth cutting.
+The kitchen garden sits below The Barn in eight raised beds, and it is the one guests use. It is planted for continuous picking rather than for a single big harvest, which means there is almost always something worth cutting.
 
 The cutting garden runs along the south fence — dahlias, zinnias, cosmos, sweet peas in spring. It exists purely so that there are flowers on the table, and you are welcome to cut them.
 
@@ -716,9 +720,11 @@ The other half of it is that there is no itinerary. Children work this out withi
         type: 'richText',
         order: 0,
         content: {
-          body: `Erin loved this valley before we ever owned a piece of it. She was the one who kept pulling off the highway to look at properties we could not afford, and she was the one who said, standing in the long grass of a dead walnut orchard, that a person could be happy here.
+          body: `Erin had an instinct for beauty that shaped this place in countless ways. She noticed the details most people passed over: the way a room felt, the balance of texture and light, the warmth of a material, the quiet difference between something that simply looked good and something that felt alive.
 
-She was right, and she did not get very long to be right in.`,
+Her aesthetic was never about perfection. It was about creating spaces that felt soulful, natural, welcoming, and deeply considered. The Little Blooming Farm carries that sensibility throughout, in the choices, the atmosphere, and the feeling of being here.
+
+The Garden of Erin is a continuation of that eye for beauty and the care she brought to the spaces around her.`,
         },
       },
       {
@@ -922,13 +928,13 @@ export const gallery = [
   { url: '/media/gallery/01.jpg', alt: 'The orchard in evening light', order: 0 },
   { url: '/media/gallery/02.jpg', alt: 'The long table set for dinner outdoors', order: 1 },
   { url: '/media/gallery/03.jpg', alt: 'A child feeding the alpacas', order: 2 },
-  { url: '/media/gallery/04.jpg', alt: 'The pool surrounded by lavender', order: 3 },
+  { url: '/media/gallery/04.jpg', alt: 'Alpacas gathered at the fence', order: 3 },
   { url: '/media/gallery/05.jpg', alt: 'Hens in the orchard grass', order: 4 },
   { url: '/media/gallery/06.jpg', alt: 'The kitchen garden in high summer', order: 5 },
   { url: '/media/gallery/07.jpg', alt: 'The fire pit after dark', order: 6 },
-  { url: '/media/gallery/08.jpg', alt: 'Aerial view of the property and the valley', order: 7 },
+  { url: '/media/gallery/08.jpg', alt: 'Children playing under the old oak', order: 7 },
   { url: '/media/gallery/09.jpg', alt: 'The peacock displaying beneath the oaks', order: 8 },
   { url: '/media/gallery/10.jpg', alt: "Erin's garden in spring", order: 9 },
-  { url: '/media/gallery/11.jpg', alt: 'The Guest House patio in morning sun', order: 10 },
+  { url: '/media/gallery/11.jpg', alt: 'The clawfoot bath by the window', order: 10 },
   { url: '/media/gallery/12.jpg', alt: 'The valley at golden hour from the top of the rise', order: 11 },
 ];

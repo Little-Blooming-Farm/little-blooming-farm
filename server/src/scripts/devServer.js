@@ -279,7 +279,7 @@ const demoDate = (offset) => {
   return d.toISOString().slice(0, 10);
 };
 
-const theHome = await Property.findOne({ slug: 'the-home' });
+const theHome = await Property.findOne({ slug: 'vicky' });
 const { booking: demoBooking } = await createPendingBooking({
   propertyId: theHome._id,
   guestName: 'Ada Lovelace',

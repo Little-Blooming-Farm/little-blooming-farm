@@ -113,8 +113,8 @@ export default function Stay() {
       <div className="sticky top-[68px] z-30 border-b border-bloom-300/70 bg-bloom-100/92 backdrop-blur-md">
         <div className="mx-auto flex max-w-editorial gap-6 overflow-x-auto px-6 py-4 lg:px-12">
           {[
-            { href: '#the-home', label: 'The Home' },
-            { href: '#the-guest-house', label: 'The Guest House' },
+            { href: '#vicky', label: 'Vicky' },
+            { href: '#the-barn', label: 'The Barn' },
             { href: '#bedrooms', label: 'Bedrooms' },
             { href: '#the-pool', label: 'Pool' },
             { href: '#the-spa', label: 'Spa' },
