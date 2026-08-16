@@ -61,13 +61,27 @@ export async function connectDatabase() {
     transactions: replicaSetCapable ? 'enabled' : 'unavailable (advisory lock only)',
   });
 
-  if (env.isProduction) {
-    // Ensure indexes exist without paying the cost on every model access.
+  return mongoose.connection;
+}
+
+/**
+ * Build indexes. Deliberately NOT awaited during startup.
+ *
+ * On a cold Atlas cluster this can take a while, and anything awaited before
+ * the HTTP server binds its port delays the port — which a platform health
+ * check reads as a dead service and kills the deploy. Indexes are a
+ * performance concern, not a correctness one at boot, so they are built in the
+ * background and their failure is logged rather than fatal.
+ */
+export async function ensureIndexes() {
+  try {
     await Promise.all(Object.values(mongoose.models).map((m) => m.createIndexes()));
     logger.info('MongoDB indexes ensured');
+  } catch (err) {
+    logger.error('Index creation failed — queries will still work, but slowly', {
+      error: err.message,
+    });
   }
-
-  return mongoose.connection;
 }
 
 export async function disconnectDatabase() {

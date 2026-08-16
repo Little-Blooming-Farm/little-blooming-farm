@@ -123,6 +123,24 @@ const schema = z
         message: 'refusing to run in production with a Stripe TEST key',
       });
     }
+    /**
+     * A connection string with no database path silently lands everything in a
+     * database called `test`. That is almost never what someone means in
+     * production, and by the time it is noticed there are real bookings in the
+     * wrong place — so it fails at boot instead.
+     */
+    const dbName = databaseNameFrom(cfg.MONGODB_URI);
+    if (!dbName || dbName === 'test') {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['MONGODB_URI'],
+        message:
+          `no database name in the connection string, so Mongo would use "test". ` +
+          `Add one before the "?", e.g. ` +
+          `mongodb+srv://user:pass@cluster.mongodb.net/little_blooming_farm?retryWrites=true&w=majority`,
+      });
+    }
+
     if (cfg.CLIENT_URL.startsWith('http://')) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
@@ -142,6 +160,12 @@ const schema = z
       });
     }
   });
+
+/** The database path from a Mongo URI, ignoring the query string. */
+function databaseNameFrom(uri) {
+  const match = /^mongodb(?:\+srv)?:\/\/[^/]+\/([^?]+)/.exec(uri ?? '');
+  return match ? decodeURIComponent(match[1]) : null;
+}
 
 /** Compare registrable domains, approximately — enough for a boot-time check. */
 function sameSite(a, b) {

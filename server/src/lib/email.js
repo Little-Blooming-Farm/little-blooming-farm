@@ -395,11 +395,22 @@ export async function verifyMailTransport() {
     return false;
   }
   try {
-    await getTransporter().verify();
+    // Bounded on purpose. Some hosts silently drop outbound SMTP rather than
+    // refusing it, and an unbounded verify() then hangs for minutes. This is a
+    // diagnostic, not a prerequisite — it must never stall anything.
+    await Promise.race([
+      getTransporter().verify(),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('timed out after 15s')), 15_000).unref()
+      ),
+    ]);
     logger.info('SMTP transport ready', { host: env.SMTP_HOST });
     return true;
   } catch (err) {
-    logger.error('SMTP verification failed', { error: err.message });
+    logger.error(
+      'SMTP verification failed — the API is running, but emails may not send',
+      { host: env.SMTP_HOST, port: env.SMTP_PORT, error: err.message }
+    );
     return false;
   }
 }
