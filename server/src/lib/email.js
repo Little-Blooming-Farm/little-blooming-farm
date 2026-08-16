@@ -43,18 +43,41 @@ function resendTransport() {
       return { messageId: payload.id ?? 'resend' };
     },
 
-    // Resend has no "verify" step; a cheap authenticated GET stands in for one,
-    // and proves the key works without sending anything.
+    /**
+     * Resend has no "verify" endpoint, so an authenticated GET /domains stands
+     * in for one: it proves the key is accepted without sending anything.
+     *
+     * The wrinkle is that a key created with "Sending access" cannot call
+     * /domains at all — Resend answers 400 `restricted_api_key`. That is not a
+     * failure. It is the narrower, better-scoped key, and reaching that error
+     * *proves* the key authenticated: an invalid key is rejected at 401 before
+     * permissions are ever considered. So it counts as a pass.
+     *
+     * Any other failure carries Resend's own message through. The first version
+     * of this reported a bare "Resend returned 400", which says nothing about
+     * what to change.
+     */
     verify: async () => {
       const response = await fetch('https://api.resend.com/domains', {
         headers: { Authorization: `Bearer ${env.RESEND_API_KEY}` },
         signal: AbortSignal.timeout(10_000),
       });
-      if (response.status === 401 || response.status === 403) {
-        throw new Error('Resend rejected the API key');
+      const payload = await response.json().catch(() => ({}));
+
+      if (response.ok) return true;
+
+      const detail = payload?.message ?? payload?.name ?? `HTTP ${response.status}`;
+
+      if (/restricted/i.test(payload?.name ?? '') || /restricted/i.test(payload?.message ?? '')) {
+        logger.info('Resend key is sending-only, which is the recommended scope', {
+          detail,
+        });
+        return true;
       }
-      if (!response.ok) throw new Error(`Resend returned ${response.status}`);
-      return true;
+      if (response.status === 401 || response.status === 403) {
+        throw new Error(`Resend rejected the API key — ${detail}`);
+      }
+      throw new Error(`Resend ${response.status}: ${detail}`);
     },
   };
 }
