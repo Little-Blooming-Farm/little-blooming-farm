@@ -4,7 +4,7 @@ Two deployables:
 
 | Piece | Lives in | Goes to | Address |
 | --- | --- | --- | --- |
-| React site | `/client` | Netlify (or Vercel) | `www.thelittlebloomingfarm.com` |
+| React site | `/client` | Netlify (or Vercel) | `thelittlebloomingfarm.com` (www redirects to it) |
 | Express API | `/server` | Render (or Railway) | `api.thelittlebloomingfarm.com` |
 | Database | — | MongoDB Atlas | — |
 | Images & video | — | Cloudinary | — |
@@ -357,20 +357,27 @@ build output. Either alone is enough; both is deliberate, because a guest's
 
 ### ⚠️ The `netlify.app` subdomain will break admin login
 
-Until you attach your own domain, the site is on `something.netlify.app` and the
-API on `something.onrender.com`. Those are **different registrable domains**, so
-the admin session cookie is third-party — the browser refuses to send it, and
-`/admin` login appears to succeed then bounces you straight back.
+Before you attach your own domain, the site is on `something.netlify.app` and
+the API on `something.onrender.com`. Those are **different registrable
+domains**, so the admin session cookie is third-party — the browser refuses to
+send it, and `/admin` login appears to succeed then bounces you straight back.
 
 The API refuses to boot in that configuration rather than misbehave, and tells
 you which variable to change. Two ways forward:
 
-- **Recommended:** attach `www.thelittlebloomingfarm.com` to Netlify and
-  `api.thelittlebloomingfarm.com` to Render. Same registrable domain, so
-  `COOKIE_SAMESITE=lax` works and the cookie stays first-party.
+- **Recommended, and the live setup:** `thelittlebloomingfarm.com` on Netlify
+  and `api.thelittlebloomingfarm.com` on Render. Same registrable domain, so
+  the cookie is first-party and `COOKIE_SAMESITE=lax` is correct.
 - **Interim, for testing on the free subdomains:** set `COOKIE_SAMESITE=none` on
   Render. Works today, but some browsers block third-party cookies outright, so
   it is not a launch configuration.
+
+**Once the custom domains are live, set `COOKIE_SAMESITE` back to `lax`.**
+`none` keeps working, but it asks the browser to send the cookie on genuinely
+cross-site requests, which is a weaker default than this setup needs. Same-site
+here includes subdomains, so `lax` cookies are sent on the site's calls to
+`api.` — this is verified: the API boots cleanly under `lax` with these two
+URLs.
 
 Either way, `CORS_ORIGINS` on Render must list the exact origin the site is
 served from — including `https://` and any `www.`. A missing entry shows up as
@@ -405,7 +412,7 @@ Render → your service → Settings → Custom Domain → add
 
 | Type | Name | Value |
 | --- | --- | --- |
-| CNAME | `api` | `lbf-api.onrender.com` |
+| CNAME | `api` | your Render service hostname, e.g. `lbf-api.onrender.com` |
 
 ### SSL
 
@@ -414,10 +421,45 @@ resolves — usually a few minutes, occasionally up to an hour.
 
 ### Then update these, or nothing will work
 
-- Render: `CLIENT_URL`, `SERVER_URL`, `CORS_ORIGINS`, `COOKIE_DOMAIN`
-- Vercel: `VITE_API_BASE_URL`
-- Stripe: the webhook endpoint URL
-- Airbnb / VRBO: the outbound feed URL (see below)
+The live values, for copying:
+
+**Render → Environment**
+
+```
+NODE_ENV=production
+CLIENT_URL=https://thelittlebloomingfarm.com
+SERVER_URL=https://api.thelittlebloomingfarm.com
+CORS_ORIGINS=https://thelittlebloomingfarm.com,https://www.thelittlebloomingfarm.com
+COOKIE_SAMESITE=lax
+COOKIE_DOMAIN=
+MAIL_FROM=The Little Blooming Farm <stay@thelittlebloomingfarm.com>
+```
+
+Leave `COOKIE_DOMAIN` blank. The session cookie is then host-only on
+`api.thelittlebloomingfarm.com`, which is what you want — scoping it to
+`.thelittlebloomingfarm.com` would hand it to every present and future
+subdomain for no benefit, since only the API ever reads it.
+
+`www` is in `CORS_ORIGINS` purely as a safety net; `netlify.toml` redirects it
+to the apex, so in normal operation the browser never calls the API from there.
+
+**Netlify → Site configuration → Environment variables**
+
+```
+VITE_API_BASE_URL=https://api.thelittlebloomingfarm.com
+```
+
+Then **trigger a redeploy**. Vite bakes `VITE_*` into the bundle at build time,
+so setting this without rebuilding changes nothing.
+
+**Stripe → Developers → Webhooks**
+
+Point the endpoint at `https://api.thelittlebloomingfarm.com/api/webhooks/stripe`
+and copy the **new** signing secret into `STRIPE_WEBHOOK_SECRET`. Each endpoint
+has its own secret — repointing an old endpoint is fine, but creating a new one
+issues a new secret and the old value will fail every signature check.
+
+**Airbnb / VRBO:** the outbound feed URL (see below).
 
 Redeploy both after changing environment variables — neither platform picks them
 up without one.

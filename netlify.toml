@@ -27,6 +27,19 @@
   # and only removes the tools that produce it.
   NPM_CONFIG_INCLUDE = "dev"
 
+# Send www to the apex, so the site has exactly one canonical origin.
+#
+# This matters beyond tidiness: the API's CORS allow-list and the admin session
+# cookie are both per-origin. A guest who arrives on www would otherwise be on
+# an origin the API may not recognise, and would see every request fail for no
+# visible reason. Must come BEFORE the SPA catch-all — Netlify applies the
+# first matching rule.
+[[redirects]]
+  from   = "https://www.thelittlebloomingfarm.com/*"
+  to     = "https://thelittlebloomingfarm.com/:splat"
+  status = 301
+  force  = true
+
 # Client-side routing. Every unknown path must serve index.html, or deep links
 # like /booking/manage/<token> return 404 on refresh — which would break the
 # link emailed to every guest.
