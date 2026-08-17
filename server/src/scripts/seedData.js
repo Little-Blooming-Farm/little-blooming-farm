@@ -722,9 +722,11 @@ The other half of it is that there is no itinerary. Children work this out withi
         content: {
           body: `Erin had an instinct for beauty that shaped this place in countless ways. She noticed the details most people passed over: the way a room felt, the balance of texture and light, the warmth of a material, the quiet difference between something that simply looked good and something that felt alive.
 
-Her aesthetic was never about perfection. It was about creating spaces that felt soulful, natural, welcoming, and deeply considered. The Little Blooming Farm carries that sensibility throughout, in the choices, the atmosphere, and the feeling of being here.
+Her aesthetic was never about perfection. It was about creating spaces that felt soulful, natural, welcoming, and deeply considered. The Little Blooming Farm carries that sensibility throughout, in the choices, the atmosphere, the gardens, and the feeling of being here.
 
-The Garden of Erin is a continuation of that eye for beauty and the care she brought to the spaces around her.`,
+Erin passed away in July 2026, leaving behind her husband Scott, her boy Indy and Neko, and a place shaped deeply by the life they created together.
+
+The Garden of Erin is their way of continuing what she began. A place to plant, create, gather, and make things beautiful. Not a garden meant to stay the same, but a living one that changes with the seasons, grows with her boys, and continues to bloom in her name.`,
         },
       },
       {

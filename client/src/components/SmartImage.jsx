@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 /**
  * An image that degrades into something deliberate.
@@ -88,7 +88,29 @@ export default function SmartImage({
 }) {
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
+  const imgRef = useRef(null);
   const useFallback = !src || failed;
+
+  /**
+   * Catch images that were already finished before React attached `onLoad`.
+   *
+   * A cached image — a revisit, a back navigation, a fast reload — can complete
+   * between the element being created and the handler being wired up. The event
+   * then never fires, `loaded` stays false, and the picture sits at opacity 0
+   * for good, showing the dark panel underneath instead of the photograph.
+   *
+   * `complete` is true for a failed load too, so naturalWidth is what actually
+   * distinguishes "decoded" from "broken".
+   */
+  useEffect(() => {
+    setLoaded(false);
+    setFailed(false);
+
+    const el = imgRef.current;
+    if (!el || !el.complete) return;
+    if (el.naturalWidth > 0) setLoaded(true);
+    else setFailed(true);
+  }, [src]);
 
   return (
     <div
@@ -101,6 +123,7 @@ export default function SmartImage({
 
       {!useFallback && (
         <img
+          ref={imgRef}
           src={src}
           alt={alt}
           loading={priority ? 'eager' : 'lazy'}

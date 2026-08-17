@@ -151,10 +151,18 @@ export default function Home() {
 
             <Reveal className="order-1 lg:order-2" delay={0.15}>
               <div className="grid grid-cols-5 grid-rows-6 gap-4 lg:gap-5">
+                {/*
+                  row-start-1 is load-bearing. Without it this image is
+                  auto-placed, and because the second one is explicitly at
+                  row-start-4 the placement algorithm cannot fit them in the six
+                  declared rows — it appends five implicit rows instead. The
+                  collage then stood 1392px tall against 519px of text, which is
+                  the large blank band that appeared above this section.
+                */}
                 <SmartImage
                   src="/media/home/stay-primary.jpg"
                   alt="The covered porch running the length of Vicky, the Victorian house"
-                  className="col-span-4 row-span-5 h-full w-full"
+                  className="col-span-4 col-start-1 row-span-5 row-start-1 h-full w-full"
                   ratio="4 / 5"
                 />
                 <SmartImage
@@ -315,12 +323,18 @@ export default function Home() {
               <p>
                 Her aesthetic was never about perfection. It was about creating spaces that felt
                 soulful, natural, welcoming, and deeply considered. The Little Blooming Farm carries
-                that sensibility throughout, in the choices, the atmosphere, and the feeling of
-                being here.
+                that sensibility throughout, in the choices, the atmosphere, the gardens, and the
+                feeling of being here.
               </p>
               <p>
-                The Garden of Erin is a continuation of that eye for beauty and the care she
-                brought to the spaces around her.
+                Erin passed away in July 2026, leaving behind her husband Scott, her boy Indy and
+                Neko, and a place shaped deeply by the life they created together.
+              </p>
+              <p>
+                The Garden of Erin is their way of continuing what she began. A place to plant,
+                create, gather, and make things beautiful. Not a garden meant to stay the same, but
+                a living one that changes with the seasons, grows with her boys, and continues to
+                bloom in her name.
               </p>
             </div>
           </Reveal>
