@@ -26,7 +26,13 @@ export default function StoryPage({ slug, eyebrow, fallbackTitle, fallbackSubtit
         eyebrow={eyebrow}
         title={page?.title ?? fallbackTitle}
         subtitle={page?.subtitle ?? fallbackSubtitle}
-        image={page?.heroImage ?? fallbackImage}
+        /*
+         * `||`, not `??`. The admin panel stores a cleared image field as an
+         * empty string, and `??` only falls back on null/undefined — so an
+         * emptied hero would defeat the fallback and render the tonal panel
+         * instead of a photograph, which reads as a grey block.
+         */
+        image={page?.heroImage || fallbackImage}
       />
 
       <div className={tone === 'cream' ? 'bg-bloom-50' : 'bg-bloom-100'}>

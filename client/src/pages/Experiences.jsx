@@ -128,7 +128,7 @@ export default function Experiences() {
         eyebrow="No schedule"
         title={content?.title ?? 'Experiences'}
         subtitle={content?.subtitle ?? 'None of it is scheduled. All of it is there when you want it.'}
-        image={content?.heroImage ?? '/media/experiences/hero.jpg'}
+        image={content?.heroImage || '/media/experiences/hero.jpg'}
       />
 
       {content?.sections?.[0]?.content?.body && (

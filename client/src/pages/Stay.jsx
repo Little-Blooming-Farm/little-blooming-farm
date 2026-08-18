@@ -106,7 +106,7 @@ export default function Stay() {
         eyebrow="The stay"
         title={content?.title ?? 'Stay'}
         subtitle={content?.subtitle ?? 'Two homes, one piece of land, and no front desk.'}
-        image={content?.heroImage ?? '/media/stay/hero.jpg'}
+        image={content?.heroImage || '/media/stay/hero.jpg'}
       />
 
       {/* Anchor nav — the page is long and people arrive looking for one thing. */}

@@ -36,7 +36,7 @@ export default function GardenOfErin() {
       {/* A soft, low hero — no scrim shouting over a photograph. */}
       <header className="relative flex min-h-[58vh] items-end overflow-hidden lg:min-h-[68vh]">
         <SmartImage
-          src={page?.heroImage ?? '/media/erin/hero.jpg'}
+          src={page?.heroImage || '/media/erin/hero.jpg'}
           alt="Erin's garden at the top of the rise"
           priority
           showMark={false}
