@@ -20,39 +20,58 @@ There are four bedrooms — two upstairs under the eaves, two on the ground floo
 Outside, a covered porch runs the length of the house. The pool and spa are a short walk down through the lavender. The chickens will find you before you find them.
 
 It is a house that asks very little of you. That is the whole idea.`,
-    maxGuests: 8,
+    /*
+     * The Airbnb listing states: "Current code only allows 6 adults — additional
+     * children are allowed, up to a maximum of 10 total guests. We abide by this
+     * ordinance."
+     *
+     * maxGuests is a single number here and cannot express "6 adults, 10 total",
+     * so it is set to the figure that cannot breach the ordinance. The revised
+     * homepage copy says Vicky sleeps eight; that is the owner's to reconcile,
+     * and until they do, the booking form must not sell a party the ordinance
+     * does not permit.
+     *
+     * Beds: Cal King + Cal King + Queen + bunk (full over twin) = 5.
+     */
+    maxGuests: 6,
     bedrooms: 4,
     bathrooms: 3,
-    beds: 6,
+    beds: 5,
     basePriceCents: 95000,
     cleaningFeeCents: 35000,
     minNights: 2,
     maxNights: 30,
     checkInTime: '4:00 PM',
     checkOutTime: '11:00 AM',
+    /*
+     * Taken from the owner's own Airbnb listing for this house, which is the
+     * authoritative description of what is actually here. The placeholder list
+     * previously advertised a heated pool, a spa and a pizza oven; none of the
+     * three appear anywhere in that listing, and advertising a pool that does
+     * not exist is a misrepresentation to someone about to pay.
+     */
     amenities: [
       'Full kitchen',
-      'Wood-burning fireplace',
-      'Heated pool',
-      'Spa',
-      'Outdoor pizza oven',
-      'Fire pit',
-      'Covered porch',
+      'Plastered fireplace',
+      'Projector (no TVs anywhere in the house)',
+      'Sonos sound system',
+      'Filtered well water on demand',
+      'Wrap-around porch',
+      'Sunset porch & hammock',
+      'Garden boxes to pick from',
       'Washer & dryer',
-      'Fast wifi',
-      'Air conditioning',
-      'Pack-n-play & high chair',
-      'Outdoor shower',
+      'Wifi',
       'Barbecue',
       'Farm access',
       'Free parking',
     ],
     houseRules: [
-      'No smoking anywhere on the property.',
-      'Quiet after 10pm — the animals keep early hours and so do we.',
-      'Children are welcome everywhere. Please keep them with you around the pool.',
-      'Please close gates behind you.',
-      'Dogs by prior arrangement only — we have birds at large.',
+      'No smoking inside the house. The patio is fine — please be mindful.',
+      'Quiet from 9pm on weeknights and 10pm at weekends, for the neighbours.',
+      'Dogs and pets are strictly prohibited, to keep the farm animals safe.',
+      'Please keep every gate to the animals closed, especially the one by the coop.',
+      'Please accompany children around the animals — admire the alpacas rather than approaching them.',
+      'Only guests named on the booking may be on the property.',
     ],
     cancellationPolicy:
       'Free cancellation up to 30 days before check-in for a full refund. Cancellations between 7 and 30 days before arrival are refunded 50%. Within 7 days of arrival the booking is non-refundable. If you need to move your dates, write to us — we will always try.',
@@ -173,15 +192,16 @@ People book it for two and stay quiet the entire time. People also book it along
     maxNights: 30,
     checkInTime: '4:00 PM',
     checkOutTime: '11:00 AM',
+    // 'Shared pool & spa' removed for the same reason as on Vicky: there is no
+    // evidence of either on the property, and this list is read by someone
+    // deciding whether to pay. TODO: owner to confirm the rest of this list —
+    // there is no Airbnb listing for The Barn to check it against.
     amenities: [
       'Kitchenette',
       'Private patio',
       'Garden access',
-      'Shared pool & spa',
-      'Fire pit',
       'Washer & dryer',
-      'Fast wifi',
-      'Air conditioning',
+      'Wifi',
       'Farm access',
       'Free parking',
     ],
