@@ -114,10 +114,10 @@ export default function BookingDetail() {
             <h2 className="mb-5 font-display text-xl font-light text-moss-800">The stay</h2>
             <Row label="Home">{property.name ?? '—'}</Row>
             <Row label="Check-in">
-              {formatDate(booking.checkIn)} from {property.checkInTime ?? '4:00 PM'}
+              {formatDate(booking.checkIn)} from {property.checkInTime ?? '3:00 PM'}
             </Row>
             <Row label="Check-out">
-              {formatDate(booking.checkOut)} by {property.checkOutTime ?? '11:00 AM'}
+              {formatDate(booking.checkOut)} by {property.checkOutTime ?? '10:00 AM'}
             </Row>
             <Row label="Nights">{pluralise(booking.nights, 'night')}</Row>
             <Row label="Guests">{booking.guests}</Row>

@@ -20,20 +20,9 @@ There are four bedrooms — two upstairs under the eaves, two on the ground floo
 Outside, a covered porch runs the length of the house. The pool and spa are a short walk down through the lavender. The chickens will find you before you find them.
 
 It is a house that asks very little of you. That is the whole idea.`,
-    /*
-     * The Airbnb listing states: "Current code only allows 6 adults — additional
-     * children are allowed, up to a maximum of 10 total guests. We abide by this
-     * ordinance."
-     *
-     * maxGuests is a single number here and cannot express "6 adults, 10 total",
-     * so it is set to the figure that cannot breach the ordinance. The revised
-     * homepage copy says Vicky sleeps eight; that is the owner's to reconcile,
-     * and until they do, the booking form must not sell a party the ordinance
-     * does not permit.
-     *
-     * Beds: Cal King + Cal King + Queen + bunk (full over twin) = 5.
-     */
-    maxGuests: 6,
+    // Eight, confirmed by the owner.
+    // Beds: Cal King + Cal King + Queen + bunk (full over twin) = 5.
+    maxGuests: 8,
     bedrooms: 4,
     bathrooms: 3,
     beds: 5,
@@ -41,8 +30,8 @@ It is a house that asks very little of you. That is the whole idea.`,
     cleaningFeeCents: 35000,
     minNights: 2,
     maxNights: 30,
-    checkInTime: '4:00 PM',
-    checkOutTime: '11:00 AM',
+    checkInTime: '3:00 PM',
+    checkOutTime: '10:00 AM',
     /*
      * Taken from the owner's own Airbnb listing for this house, which is the
      * authoritative description of what is actually here. The placeholder list
@@ -127,9 +116,9 @@ By typing their name, the Guest confirms they have read and accept this agreemen
         'From Highway 154, turn onto Roblar Avenue and continue for about two miles. The entrance is on the right, marked by two olive trees and a green gate. The drive is gravel and unlit — take it slowly after dark, and watch for chickens.',
       parking: 'Park anywhere on the gravel apron in front of the barn. Do not block the barn doors.',
       checkInInstructions:
-        'Check-in is any time after 4pm. Use the gate code at the keypad, then the door code on the front door. Cowboy will meet you at the gate and will expect to be acknowledged.',
+        'Check-in is any time after 3pm. Use the gate code at the keypad, then the door code on the front door. Cowboy will meet you at the gate and will expect to be acknowledged.',
       checkOutInstructions:
-        'Leave by 11am. Strip nothing, wash nothing — just load the dishwasher, close the windows, and pull the gate to behind you.',
+        'Leave by 10am. Strip nothing, wash nothing — just load the dishwasher, close the windows, and pull the gate to behind you.',
       emergencyContact: '',
       houseManual: [
         {
@@ -190,8 +179,8 @@ People book it for two and stay quiet the entire time. People also book it along
     cleaningFeeCents: 20000,
     minNights: 2,
     maxNights: 30,
-    checkInTime: '4:00 PM',
-    checkOutTime: '11:00 AM',
+    checkInTime: '3:00 PM',
+    checkOutTime: '10:00 AM',
     // 'Shared pool & spa' removed for the same reason as on Vicky: there is no
     // evidence of either on the property, and this list is read by someone
     // deciding whether to pay. TODO: owner to confirm the rest of this list —
@@ -265,8 +254,8 @@ By typing their name, the Guest confirms they have read and accept this agreemen
         'From Highway 154, turn onto Roblar Avenue and continue for about two miles. The entrance is on the right, marked by two olive trees and a green gate. Follow the drive past the main house and bear left at the olive tree; the Guest House is the low building at the edge of the kitchen garden.',
       parking: 'There is a space beside the Guest House itself. Park there rather than on the main apron.',
       checkInInstructions:
-        'Check-in is any time after 4pm. Use the gate code at the keypad, then the door code on the blue door.',
-      checkOutInstructions: 'Leave by 11am. Load the dishwasher, close the windows, pull the gate to behind you.',
+        'Check-in is any time after 3pm. Use the gate code at the keypad, then the door code on the blue door.',
+      checkOutInstructions: 'Leave by 10am. Load the dishwasher, close the windows, pull the gate to behind you.',
       emergencyContact: '',
       houseManual: [
         {

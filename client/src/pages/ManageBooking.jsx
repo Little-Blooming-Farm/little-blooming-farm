@@ -473,10 +473,10 @@ export default function ManageBooking() {
               <DetailRow label="Guests">{booking.guests}</DetailRow>
               <DetailRow label="Nights">{pluralise(booking.nights, 'night')}</DetailRow>
               <DetailRow label="Check-in">
-                {formatDate(booking.checkIn)} from {booking.property?.checkInTime ?? '4:00 PM'}
+                {formatDate(booking.checkIn)} from {booking.property?.checkInTime ?? '3:00 PM'}
               </DetailRow>
               <DetailRow label="Check-out">
-                {formatDate(booking.checkOut)} by {booking.property?.checkOutTime ?? '11:00 AM'}
+                {formatDate(booking.checkOut)} by {booking.property?.checkOutTime ?? '10:00 AM'}
               </DetailRow>
               <DetailRow
                 label={`${formatMoney(booking.nightlyRateCents, booking.currency)} × ${pluralise(booking.nights, 'night')}`}
