@@ -113,8 +113,21 @@ export default function SmartImage({
   }, [src]);
 
   return (
+    /*
+     * `relative` is only applied when the caller has not positioned this
+     * itself. Emitting both `relative` and an incoming `absolute` puts two
+     * position utilities on one element, and the winner is decided by their
+     * order in the stylesheet, not by the class attribute — Tailwind emits
+     * `.relative` after `.absolute`, so the caller always lost.
+     *
+     * PageHero passes `absolute inset-0 h-full w-full` into a `flex items-end`
+     * section with only a min-height. Forced back to `relative`, the wrapper
+     * became a flex item resolving `h-full` against an indefinite height, and
+     * collapsed to 0x0 — a fully loaded, fully opaque image at zero size, which
+     * is why every story page showed a bare tonal panel.
+     */
     <div
-      className={`relative overflow-hidden bg-moss-800 ${className}`}
+      className={`${/(^|\s)(absolute|fixed|sticky|static)(\s|$)/.test(className) ? '' : 'relative'} overflow-hidden bg-moss-800 ${className}`}
       style={ratio ? { aspectRatio: ratio } : undefined}
     >
       {/* The panel sits underneath always, so a slow load fades in over tone
