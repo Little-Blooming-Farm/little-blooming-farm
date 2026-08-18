@@ -33,3 +33,7 @@ coverage/
 # dev-server tooling how to start this project); the permission allowlist is
 # personal to whoever ran it and should not follow the repo around.
 .claude/settings.local.json
+
+# Photographic masters. Kept out of the repo: 266MB would bloat every
+# clone and every Netlify build. Back these up somewhere durable.
+media-originals/

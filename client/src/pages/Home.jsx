@@ -36,7 +36,14 @@ export default function Home() {
   return (
     <>
       {/* ---------------------------------------------------------------- Hero */}
-      <Hero videoSrc="/media/hero.mp4" posterSrc="/media/home/hero-poster.jpg">
+      {/*
+        No videoSrc: there is no hero film. Asking for a file that does not
+        exist is worse than not asking — the SPA rewrite answers /media/hero.mp4
+        with index.html, so the browser downloaded the whole HTML document as a
+        video on every visit before failing over to the poster. Pass videoSrc
+        again the day there is an actual film to play.
+      */}
+      <Hero posterSrc="/media/home/hero-poster.jpg">
         <motion.div
           variants={container}
           initial="hidden"

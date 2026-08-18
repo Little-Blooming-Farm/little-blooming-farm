@@ -921,6 +921,26 @@ Come, stay, let your children get filthy, cut the flowers, and leave the gate as
           ],
         },
       },
+      {
+        /**
+         * The Airbnb guidebook, linked rather than embedded: Airbnb serves
+         * `x-frame-options: SAMEORIGIN`, so it cannot be put in an iframe, and
+         * it answers automated requests with 403, so the entries cannot be
+         * pulled in and rendered here either.
+         *
+         * Editable from /admin like any other block — as the guidebook's
+         * contents get rewritten into the grids above, this can simply be
+         * deleted.
+         */
+        type: 'cta',
+        order: 6,
+        content: {
+          heading: 'Our full guidebook',
+          body: 'Everything above, plus the places we send people to when they ask — kept up to date in our Airbnb guidebook.',
+          buttonLabel: 'Open the guidebook',
+          buttonHref: 'https://www.airbnb.com/s/guidebooks?refinement_paths%5B%5D=/guidebooks/4055632',
+        },
+      },
     ],
   },
 ];
