@@ -116,8 +116,6 @@ export default function Stay() {
             { href: '#vicky', label: 'Vicky' },
             { href: '#the-barn', label: 'The Barn' },
             { href: '#bedrooms', label: 'Bedrooms' },
-            { href: '#the-pool', label: 'Pool' },
-            { href: '#the-spa', label: 'Spa' },
             { href: '#outdoor-spaces', label: 'Outdoor spaces' },
           ].map((item) => (
             <a
@@ -143,7 +141,7 @@ export default function Stay() {
         </div>
       </section>
 
-      {/* The remaining editable sections: bedrooms, pool, spa, outdoor, CTA. */}
+      {/* The remaining editable sections: bedrooms, outdoor spaces, CTA. */}
       <div className="bg-bloom-50">
         <BlockRenderer sections={(content?.sections ?? []).slice(1)} />
       </div>

@@ -17,7 +17,7 @@ export const properties = [
 
 There are four bedrooms — two upstairs under the eaves, two on the ground floor with doors to the garden. The kitchen is stocked properly: real knives, a heavy pot, enough bowls for everyone at once. There is a fireplace that draws well and a stack of dry oak beside it.
 
-Outside, a covered porch runs the length of the house. The pool and spa are a short walk down through the lavender. The chickens will find you before you find them.
+Outside, a covered porch runs the length of the house, and a sunset porch with a hammock at the western end. The chickens will find you before you find them.
 
 It is a house that asks very little of you. That is the whole idea.`,
     // Eight, confirmed by the owner.
@@ -85,7 +85,7 @@ The Guest may occupy the home shown on the booking for the dates shown, with no 
 Where a deposit has been taken, the balance is due by the date shown on the booking and in the Guest's booking page. Access details are released once the balance is settled. Unpaid balances may result in the booking being cancelled under clause 5.
 
 3. THE PROPERTY IS A WORKING FARM
-This is not a hotel. There are animals, uneven ground, an unfenced pool, farm equipment, and a seasonal creek. The Guest accepts that they and their party enter and use the property, its grounds, its pool and spa, and interact with the animals entirely at their own risk, and agrees to supervise children at all times. If anyone in the party cannot swim, the Guest must tell the Owner before arrival so the temporary pool fence can be fitted.
+This is not a hotel. There are animals, uneven ground, farm equipment, and a seasonal creek. The Guest accepts that they and their party enter and use the property and its grounds, and interact with the animals, entirely at their own risk, and agrees to supervise children at all times.
 
 4. CARE OF THE PROPERTY
 The Guest agrees to leave the property as they found it, to report any breakage or damage promptly, and to accept responsibility for the cost of repair or replacement of anything damaged beyond fair wear and tear during the stay. Gates are to be closed. Smoking is not permitted anywhere on the property, indoors or out, and a breach of this term may incur a cleaning charge.
@@ -128,10 +128,6 @@ By typing their name, the Guest confirms they have read and accept this agreemen
         {
           title: 'Eggs',
           body: 'The nest boxes are along the back wall of the coop and the basket hangs by the door. Collect whatever is there — it is yours. If a hen is sitting, she will grumble but she will not mind.',
-        },
-        {
-          title: 'The pool and spa',
-          body: 'Both are heated April to October. The spa control is on the wall inside the pool gate. There is no lifeguard and the pool is not fenced unless you asked us to fit the temporary fence.',
         },
         {
           title: 'The pizza oven',
@@ -223,7 +219,7 @@ The Guest may occupy the home shown on the booking for the dates shown, with no 
 Where a deposit has been taken, the balance is due by the date shown on the booking and in the Guest's booking page. Access details are released once the balance is settled. Unpaid balances may result in the booking being cancelled under clause 5.
 
 3. THE PROPERTY IS A WORKING FARM
-This is not a hotel. There are animals, uneven ground, an unfenced pool, farm equipment, and a seasonal creek. The Guest accepts that they and their party enter and use the property, its grounds, its pool and spa, and interact with the animals entirely at their own risk, and agrees to supervise children at all times. If anyone in the party cannot swim, the Guest must tell the Owner before arrival so the temporary pool fence can be fitted.
+This is not a hotel. There are animals, uneven ground, farm equipment, and a seasonal creek. The Guest accepts that they and their party enter and use the property and its grounds, and interact with the animals, entirely at their own risk, and agrees to supervise children at all times.
 
 4. CARE OF THE PROPERTY
 The Guest agrees to leave the property as they found it, to report any breakage or damage promptly, and to accept responsibility for the cost of repair or replacement of anything damaged beyond fair wear and tear during the stay. Gates are to be closed. Smoking is not permitted anywhere on the property, indoors or out, and a breach of this term may incur a cleaning charge.
@@ -265,10 +261,6 @@ By typing their name, the Guest confirms they have read and accept this agreemen
         {
           title: 'The animals',
           body: 'Grain for the alpacas and goats is in the bin by the paddock gate. The chickens will find you long before you find them.',
-        },
-        {
-          title: 'The pool and spa',
-          body: 'Shared with the main house and heated April to October. Please use them freely.',
         },
         {
           title: 'If something breaks',
@@ -549,7 +541,7 @@ export const contentPages = [
         order: 0,
         content: {
           heading: 'Two homes',
-          body: `There are two places to stay here and they share everything outside their own walls — the orchard, the garden, the pool, the fire pit, the animals, the quiet.
+          body: `There are two places to stay here and they share everything outside their own walls — the orchard, the garden, the animals, the quiet.
 
 Take Vicky if you are a family or two, or a group who want to eat together every night. Take The Barn if you are two people who want a door of your own and very little else. Take both if you are all coming and someone needs their own kettle.`,
         },
@@ -570,30 +562,6 @@ The two upstairs rooms in Vicky are under the eaves and have the best light in t
       {
         type: 'imageText',
         order: 3,
-        content: {
-          heading: 'The pool',
-          imagePosition: 'right',
-          image: { url: '/media/stay/pool.jpg', alt: 'Alpacas gathered at the fence' },
-          body: `Heated from April to October, surrounded by lavender that hums audibly with bees on a hot afternoon.
-
-It is not fenced. If you are bringing children who cannot swim, please tell us before you arrive and we will put up the temporary fence before you come.`,
-        },
-      },
-      {
-        type: 'imageText',
-        order: 4,
-        content: {
-          heading: 'The spa',
-          imagePosition: 'left',
-          image: { url: '/media/stay/spa.jpg', alt: 'The spa at dusk, steam rising' },
-          body: `Set slightly apart, facing away from the houses and toward the hills. It holds six comfortably.
-
-The best time is about forty minutes after sunset in winter, when the sky is still going and it is cold enough to see the steam.`,
-        },
-      },
-      {
-        type: 'imageText',
-        order: 5,
         content: {
           heading: 'Outdoor spaces',
           imagePosition: 'right',
