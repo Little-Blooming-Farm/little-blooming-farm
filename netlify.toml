@@ -69,4 +69,18 @@
 [[headers]]
   for = "/media/*"
   [headers.values]
-    Cache-Control = "public, max-age=604800"
+    # Photographs live at stable paths — /media/home/hero-poster.jpg keeps its
+    # name when the picture behind it changes. A week-long max-age therefore
+    # pins whatever a visitor happened to fetch first: replacing the 640px
+    # originals with sharp ones changed nothing for anyone who had already
+    # loaded the page, because the browser never asked again.
+    #
+    # Short freshness plus a long stale-while-revalidate keeps that from
+    # happening: the CDN still answers instantly from cache, and it refreshes
+    # in the background, so a replaced photograph appears within minutes rather
+    # than a week. Netlify already sends an ETag, so the revalidation is a
+    # cheap 304 when nothing changed.
+    #
+    # Fingerprinted /assets/* keep their immutable year below — those filenames
+    # change whenever their contents do, so they can never go stale.
+    Cache-Control = "public, max-age=600, stale-while-revalidate=604800"
