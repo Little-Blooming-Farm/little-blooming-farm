@@ -718,6 +718,38 @@ await test('an SSRF-shaped iCal URL is refused', async () => {
   assert.equal(status, 400);
 });
 
+/**
+ * The admin form PATCHes the whole property, photos included, and the shipped
+ * photos are site-relative paths. A strict `z.string().url()` rejected those,
+ * so the entire save 400'd and an unrelated edit — a calendar link — appeared
+ * to succeed and silently did not persist.
+ */
+await test('saving the whole property keeps relative photo paths and stores the feed', async () => {
+  const feed = 'https://www.airbnb.com/calendar/ical/1234567890.ics?t=abc123';
+  const { status, body } = await api('PATCH', `/api/admin/properties/${theHome._id}`, {
+    body: {
+      airbnbIcalUrl: feed,
+      photos: [
+        { url: '/media/stay/home-01.jpg', alt: 'Relative path, as shipped', order: 0 },
+        { url: 'https://res.cloudinary.com/demo/image/upload/x.jpg', alt: 'Absolute', order: 1 },
+      ],
+    },
+  });
+  assert.equal(status, 200, `expected 200, got ${status} ${JSON.stringify(body?.error ?? {})}`);
+
+  const saved = await Property.findById(theHome._id).lean();
+  assert.equal(saved.airbnbIcalUrl, feed, 'the calendar link must actually persist');
+  assert.equal(saved.photos.length, 2);
+  assert.equal(saved.photos[0].url, '/media/stay/home-01.jpg');
+});
+
+await test('a photo URL that is neither absolute nor rooted is still refused', async () => {
+  const { status } = await api('PATCH', `/api/admin/properties/${theHome._id}`, {
+    body: { photos: [{ url: 'javascript:alert(1)', alt: 'nope', order: 0 }] },
+  });
+  assert.equal(status, 400);
+});
+
 await test('a cross-origin admin mutation is refused (CSRF backstop)', async () => {
   const { status, body } = await api('POST', '/api/admin/blocked-dates', {
     body: {

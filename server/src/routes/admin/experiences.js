@@ -3,6 +3,7 @@ import express from 'express';
 import { Experience } from '../../models/Experience.js';
 import { asyncHandler, notFound } from '../../lib/errors.js';
 import {
+  mediaUrl,
   objectId,
   optionalText,
   safeText,
@@ -20,7 +21,7 @@ const bodySchema = z.object({
   description: optionalText(6000),
   image: z
     .object({
-      url: z.string().url().max(1000).or(z.literal('')),
+      url: mediaUrl(1000).or(z.literal('')),
       publicId: z.string().max(300).optional().default(''),
       alt: optionalText(300),
     })

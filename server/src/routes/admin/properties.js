@@ -3,12 +3,12 @@ import express from 'express';
 import { Property } from '../../models/Property.js';
 import { asyncHandler, notFound } from '../../lib/errors.js';
 import { assertSafeFeedUrl, syncPropertyCalendars } from '../../services/icalService.js';
-import { objectId, optionalText, safeText, validate, z } from '../../middleware/validate.js';
+import { mediaUrl, objectId, optionalText, safeText, validate, z } from '../../middleware/validate.js';
 
 const router = express.Router();
 
 const photoSchema = z.object({
-  url: z.string().url().max(1000),
+  url: mediaUrl(1000),
   publicId: z.string().max(300).optional().default(''),
   alt: optionalText(300),
   caption: optionalText(300),

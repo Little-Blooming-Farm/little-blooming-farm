@@ -3,6 +3,7 @@ import express from 'express';
 import { Animal } from '../../models/Animal.js';
 import { asyncHandler, notFound } from '../../lib/errors.js';
 import {
+  mediaUrl,
   objectId,
   optionalText,
   safeText,
@@ -14,7 +15,7 @@ import {
 const router = express.Router();
 
 const imageSchema = z.object({
-  url: z.string().url().max(1000).or(z.literal('')),
+  url: mediaUrl(1000).or(z.literal('')),
   publicId: z.string().max(300).optional().default(''),
   alt: optionalText(300),
 });

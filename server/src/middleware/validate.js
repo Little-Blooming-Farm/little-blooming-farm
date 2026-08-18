@@ -71,6 +71,32 @@ export const safeText = (max) =>
 
 export const optionalText = (max) => safeText(max).optional().default('');
 
+/**
+ * A URL pointing at an image or file we serve.
+ *
+ * Must accept BOTH an absolute https URL (Cloudinary, once uploads move there)
+ * and a site-relative path like `/media/stay/home-01.jpg`, because that is what
+ * the shipped content uses. A bare `z.string().url()` rejects the relative form,
+ * which made every property carrying seeded photos impossible to save from the
+ * admin panel: the whole form 400'd on `photos.0.url`, so an unrelated edit —
+ * a calendar link, say — silently failed to persist.
+ *
+ * Protocol-relative (`//host/x`) is deliberately excluded: it would inherit
+ * whatever scheme the page used, and it is never what someone means here.
+ */
+export const mediaUrl = (max = 1000) =>
+  z
+    .string()
+    .trim()
+    .max(max)
+    .refine(
+      (v) =>
+        /^https:\/\/[^\s]+$/.test(v) ||
+        /^http:\/\/[^\s]+$/.test(v) ||
+        (v.startsWith('/') && !v.startsWith('//') && !/\s/.test(v)),
+      { message: 'must be an https URL or a path beginning with /' }
+    );
+
 /** Coerce a `?limit=25` style query param into a bounded integer. */
 export const intParam = (min, max, fallback) =>
   z
