@@ -36,6 +36,26 @@ export async function request(path, { method = 'GET', body, signal, headers = {}
   if (response.status === 204) return null;
 
   const contentType = response.headers.get('content-type') ?? '';
+
+  /**
+   * A 200 of HTML from an API path means the request never reached the API.
+   *
+   * When VITE_API_BASE_URL is unset the base is '', so every call goes to the
+   * site's own origin, where the SPA catch-all rewrite answers /api/* with
+   * index.html. Without this the failure surfaced as a JSON parse error deep in
+   * a component, which says nothing about the actual cause — a build that was
+   * never told where the API lives. Vite bakes that variable in at BUILD time,
+   * so setting it afterwards changes nothing until the site is rebuilt.
+   */
+  if (response.ok && contentType.includes('text/html')) {
+    throw new ApiError(
+      0,
+      'API_BASE_NOT_CONFIGURED',
+      'This site is not pointed at its API. Set VITE_API_BASE_URL in the hosting ' +
+        'dashboard and redeploy — Vite reads it when the site is built, not when it runs.'
+    );
+  }
+
   const payload = contentType.includes('application/json')
     ? await response.json().catch(() => null)
     : await response.text();
