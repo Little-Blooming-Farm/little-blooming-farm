@@ -98,6 +98,11 @@ export const adminDashboard = () => api.get('/api/admin/dashboard');
 export const adminSendTestEmail = () => api.post('/api/admin/test-email');
 
 export const adminProperties = () => api.get('/api/admin/properties');
+
+export const adminDiscounts = () => api.get('/api/admin/discounts');
+export const adminCreateDiscount = (body) => api.post('/api/admin/discounts', body);
+export const adminUpdateDiscount = (id, body) => api.patch(`/api/admin/discounts/${id}`, body);
+export const adminDeleteDiscount = (id) => api.del(`/api/admin/discounts/${id}`);
 export const adminProperty = (id) => api.get(`/api/admin/properties/${id}`);
 export const adminUpdateProperty = (id, updates) =>
   api.patch(`/api/admin/properties/${id}`, updates);

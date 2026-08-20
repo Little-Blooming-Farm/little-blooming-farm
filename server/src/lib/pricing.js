@@ -68,13 +68,94 @@ export function assertStayIsValid({ property, checkIn, checkOut, guests }) {
  * Price breakdown: nights × nightly rate + cleaning fee.
  * Integer cents throughout — no floating point ever touches money.
  */
-export function computeQuote({ property, checkIn, checkOut, guests }) {
+/**
+ * Why a code does not apply to this stay, or null when it does.
+ *
+ * Every reason is returned as guest-readable text, but note what is NOT
+ * distinguished: an unknown code, an expired code and a code that is out of
+ * redemptions all read the same to the guest. Telling someone their code is
+ * "expired" rather than "not recognised" confirms the code exists and invites
+ * guessing at the rest.
+ */
+export function discountRejection({ discount, property, nights, subtotalCents, now = new Date() }) {
+  if (!discount || !discount.isActive) return 'That code is not valid for this stay.';
+  if (discount.startsAt && now < discount.startsAt) return 'That code is not valid for this stay.';
+  if (discount.endsAt && now >= discount.endsAt) return 'That code is not valid for this stay.';
+
+  const remaining = discount.remainingRedemptions?.();
+  if (remaining === 0) return 'That code is not valid for this stay.';
+
+  const scoped = (discount.propertyIds ?? []).map((id) => id.toString());
+  if (scoped.length > 0 && !scoped.includes(property._id.toString())) {
+    return `That code cannot be used for ${property.name}.`;
+  }
+
+  if (discount.minNights && nights < discount.minNights) {
+    return `That code needs a stay of at least ${discount.minNights} nights.`;
+  }
+  if (discount.minSubtotalCents && subtotalCents < discount.minSubtotalCents) {
+    return `That code needs a booking of at least ${formatMoney(discount.minSubtotalCents)}.`;
+  }
+  return null;
+}
+
+/**
+ * What a code takes off, in cents.
+ *
+ * Applied to the accommodation subtotal only. The cleaning fee is a cost that
+ * is incurred whatever the guest paid for the nights, so discounting it eats
+ * into money already spent rather than into margin.
+ *
+ * Clamped to the subtotal so a large fixed code can never drive a stay below
+ * zero and produce a negative Stripe line.
+ */
+export function discountAmountCents(discount, accommodationCents) {
+  if (!discount) return 0;
+  const raw =
+    discount.kind === 'percent'
+      ? Math.round((accommodationCents * discount.value) / 100)
+      : discount.value;
+  return Math.max(0, Math.min(raw, accommodationCents));
+}
+
+/**
+ * @param discount        the Discount document, or null if the code matched nothing
+ * @param requestedCode   what the guest actually typed, if anything
+ *
+ * Both are needed to tell "no code was entered" from "a code was entered and it
+ * does not exist". Without the second, a typo priced at full price in silence.
+ */
+export function computeQuote({
+  property,
+  checkIn,
+  checkOut,
+  guests,
+  discount = null,
+  requestedCode = null,
+  now = new Date(),
+}) {
   const { start, end, nights } = assertStayIsValid({ property, checkIn, checkOut, guests });
 
   const nightlyRateCents = property.basePriceCents;
   const accommodationCents = nightlyRateCents * nights;
   const cleaningFeeCents = property.cleaningFeeCents ?? 0;
-  const totalPriceCents = accommodationCents + cleaningFeeCents;
+
+  /**
+   * A code that does not qualify is dropped rather than thrown, so a guest who
+   * changes their dates after entering one sees the price update with a note,
+   * instead of the page erroring. The route surfaces `discountError` when the
+   * guest actually typed something.
+   */
+  const asked = Boolean(requestedCode && String(requestedCode).trim());
+  const rejection = discount
+    ? discountRejection({ discount, property, nights, subtotalCents: accommodationCents, now })
+    : asked
+      ? 'That code is not valid for this stay.'
+      : null;
+  const applied = rejection ? null : discount;
+
+  const discountCents = discountAmountCents(applied, accommodationCents);
+  const totalPriceCents = accommodationCents - discountCents + cleaningFeeCents;
 
   return {
     propertyId: property._id.toString(),
@@ -87,6 +168,10 @@ export function computeQuote({ property, checkIn, checkOut, guests }) {
     nightlyRateCents,
     accommodationCents,
     cleaningFeeCents,
+    discountCents,
+    discountCode: applied ? applied.code : null,
+    discountLabel: applied ? applied.label || applied.code : null,
+    discountError: rejection,
     totalPriceCents,
     currency: env.STRIPE_CURRENCY,
     lineItems: [
@@ -94,6 +179,14 @@ export function computeQuote({ property, checkIn, checkOut, guests }) {
         label: `${formatMoney(nightlyRateCents)} × ${nights} ${nights === 1 ? 'night' : 'nights'}`,
         amountCents: accommodationCents,
       },
+      ...(discountCents > 0
+        ? [
+            {
+              label: applied.label ? `${applied.label} (${applied.code})` : `Discount (${applied.code})`,
+              amountCents: -discountCents,
+            },
+          ]
+        : []),
       ...(cleaningFeeCents > 0
         ? [{ label: 'Cleaning fee', amountCents: cleaningFeeCents }]
         : []),

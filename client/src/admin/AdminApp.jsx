@@ -12,6 +12,7 @@ const BookingDetail = lazy(() => import('./BookingDetail.jsx'));
 const CalendarBlocks = lazy(() => import('./CalendarBlocks.jsx'));
 const PropertiesIndex = lazy(() => import('./PropertiesIndex.jsx'));
 const PropertySettings = lazy(() => import('./PropertySettings.jsx'));
+const DiscountsEditor = lazy(() => import('./DiscountsEditor.jsx'));
 const ContentEditor = lazy(() => import('./ContentEditor.jsx'));
 const AnimalsEditor = lazy(() => import('./AnimalsEditor.jsx'));
 const MediaManager = lazy(() => import('./MediaManager.jsx'));
@@ -50,6 +51,7 @@ export default function AdminApp() {
             <Route path="calendar" element={<CalendarBlocks />} />
             <Route path="properties" element={<PropertiesIndex />} />
             <Route path="properties/:id" element={<PropertySettings />} />
+            <Route path="discounts" element={<DiscountsEditor />} />
             <Route path="content" element={<ContentEditor />} />
             <Route path="content/:slug" element={<ContentEditor />} />
             <Route path="animals" element={<AnimalsEditor />} />

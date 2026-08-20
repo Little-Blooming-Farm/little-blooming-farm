@@ -37,6 +37,7 @@ const { createApp } = await import('../app.js');
 const { Property } = await import('../models/Property.js');
 const { Booking } = await import('../models/Booking.js');
 const { Admin } = await import('../models/Admin.js');
+const Discount = (await import('../models/Discount.js')).default;
 const { hashToken } = await import('../lib/tokens.js');
 const { stripe } = await import('../lib/stripe.js');
 const { properties: seedProperties } = await import('./seedData.js');
@@ -709,6 +710,121 @@ await test('a manual block on free dates is created and blocks booking', async (
   });
   assert.equal(bookStatus, 409);
   assert.equal(bookBody.error.code, 'DATES_UNAVAILABLE');
+});
+
+section('Discounts');
+
+await test('a percentage code comes off the nightly total, not the cleaning fee', async () => {
+  await Discount.deleteMany({});
+  await Discount.create({ code: 'PCT10', kind: 'percent', value: 10, label: 'Ten off' });
+
+  const { body } = await api('POST', '/api/bookings/quote', {
+    body: { propertyId: theHome._id.toString(), checkIn: iso(60), checkOut: iso(63), guests: 2, discountCode: 'pct10' },
+  });
+
+  const accommodation = theHome.basePriceCents * 3;
+  assert.equal(body.quote.accommodationCents, accommodation);
+  assert.equal(body.quote.discountCents, Math.round(accommodation * 0.1));
+  assert.equal(body.quote.cleaningFeeCents, theHome.cleaningFeeCents, 'cleaning must not be discounted');
+  assert.equal(
+    body.quote.totalPriceCents,
+    accommodation - body.quote.discountCents + theHome.cleaningFeeCents
+  );
+});
+
+await test('a fixed code larger than the stay cannot make the total negative', async () => {
+  await Discount.deleteMany({});
+  await Discount.create({ code: 'HUGE', kind: 'fixed', value: 99_999_999 });
+
+  const { body } = await api('POST', '/api/bookings/quote', {
+    body: { propertyId: theHome._id.toString(), checkIn: iso(60), checkOut: iso(63), guests: 2, discountCode: 'HUGE' },
+  });
+
+  assert.equal(body.quote.discountCents, theHome.basePriceCents * 3);
+  assert.equal(body.quote.totalPriceCents, theHome.cleaningFeeCents);
+  assert.ok(body.quote.totalPriceCents >= 0);
+});
+
+/**
+ * The whole point of pricing server-side. A browser that posts its own idea of
+ * the discount must not be able to move the number.
+ */
+await test('money fields posted by the client are rejected, not honoured', async () => {
+  const { status } = await api('POST', '/api/bookings/quote', {
+    body: {
+      propertyId: theHome._id.toString(),
+      checkIn: iso(60),
+      checkOut: iso(63),
+      guests: 2,
+      discountCents: 300000,
+      totalPriceCents: 1,
+    },
+  });
+  assert.equal(status, 400);
+});
+
+await test('a code that does not exist prices at full and says so', async () => {
+  await Discount.deleteMany({});
+  const { body } = await api('POST', '/api/bookings/quote', {
+    body: { propertyId: theHome._id.toString(), checkIn: iso(60), checkOut: iso(63), guests: 2, discountCode: 'NOSUCH' },
+  });
+  assert.equal(body.quote.discountCents, 0);
+  assert.ok(body.quote.discountError, 'the guest must be told their code did nothing');
+});
+
+/**
+ * Two checkouts landing together on the last redemption. Reading the counter
+ * and writing it back would let both through; the claim is one atomic update.
+ */
+await test('a one-use code survives eight simultaneous claims', async () => {
+  await Discount.deleteMany({});
+  await Discount.create({ code: 'ONLYONE', kind: 'percent', value: 10, maxRedemptions: 1 });
+
+  const { claimRedemption } = await import('../services/discountService.js');
+  const results = await Promise.all(Array.from({ length: 8 }, () => claimRedemption('ONLYONE')));
+
+  assert.equal(results.filter(Boolean).length, 1, 'exactly one claim may win');
+  assert.equal((await Discount.findOne({ code: 'ONLYONE' })).timesRedeemed, 1);
+});
+
+await test('releasing a redemption cannot drive the count below zero', async () => {
+  await Discount.deleteMany({});
+  await Discount.create({ code: 'REL', kind: 'percent', value: 10, timesRedeemed: 0 });
+
+  const { releaseRedemption } = await import('../services/discountService.js');
+  await releaseRedemption('REL');
+  await releaseRedemption('REL');
+
+  assert.equal((await Discount.findOne({ code: 'REL' })).timesRedeemed, 0);
+});
+
+await test('a booking freezes the discount and charges the reduced total', async () => {
+  await Discount.deleteMany({});
+  await Discount.create({ code: 'FREEZE', kind: 'percent', value: 20 });
+
+  const { status, body } = await api('POST', '/api/bookings', {
+    body: {
+      propertyId: theHome._id.toString(),
+      checkIn: iso(470),
+      checkOut: iso(473),
+      guests: 2,
+      guestName: 'Ada Lovelace',
+      guestEmail: 'ada@example.com',
+      acceptedTerms: true,
+      discountCode: 'freeze',
+    },
+  });
+  assert.equal(status, 201);
+
+  const booking = await Booking.findById(body.bookingId);
+  const expected = Math.round(theHome.basePriceCents * 3 * 0.8) + theHome.cleaningFeeCents;
+  assert.equal(booking.totalPriceCents, expected);
+  assert.equal(booking.discountCode, 'FREEZE');
+  assert.equal(
+    booking.payments.reduce((sum, p) => sum + p.amountCents, 0),
+    expected,
+    'the instalments must add up to the discounted total'
+  );
 });
 
 await test('an SSRF-shaped iCal URL is refused', async () => {

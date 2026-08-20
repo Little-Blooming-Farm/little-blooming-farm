@@ -39,6 +39,14 @@ export default function Book() {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [serverQuote, setServerQuote] = useState(null);
   const [selectedDeposit, setSelectedDeposit] = useState(null);
+  /**
+   * `discountCode` is what the guest is typing; `appliedCode` is what the last
+   * quote was priced with. Keeping them apart stops every keystroke re-pricing
+   * the stay, and lets the field show a rejection without clearing what they
+   * typed so they can correct a typo.
+   */
+  const [discountCode, setDiscountCode] = useState('');
+  const [appliedCode, setAppliedCode] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [fieldErrors, setFieldErrors] = useState({});
@@ -103,6 +111,7 @@ export default function Book() {
           checkOut: range.checkOut,
           guests,
           ...(selectedDeposit ? { depositPercent: selectedDeposit } : {}),
+          ...(appliedCode ? { discountCode: appliedCode } : {}),
         });
         setServerQuote(result);
         setError(null);
@@ -113,7 +122,7 @@ export default function Book() {
     }, 300);
 
     return () => clearTimeout(quoteTimer.current);
-  }, [property, range.checkIn, range.checkOut, guests, selectedDeposit]);
+  }, [property, range.checkIn, range.checkOut, guests, selectedDeposit, appliedCode]);
 
   // Changing home invalidates the dates — the two calendars are independent.
   const selectProperty = (id) => {
@@ -168,6 +177,7 @@ export default function Book() {
         message: form.message.trim(),
         acceptedTerms: true,
         ...(depositChoice?.available ? { depositPercent: selected } : {}),
+        ...(appliedCode ? { discountCode: appliedCode } : {}),
       });
 
       // Hand off to Stripe. Nothing is confirmed until their webhook says so.
@@ -364,6 +374,16 @@ export default function Book() {
                           {formatMoney(quote.accommodationCents)}
                         </dd>
                       </div>
+                      {quote.discountCents > 0 && (
+                        <div className="flex items-baseline justify-between gap-4">
+                          <dt className="font-sans text-[14px] font-light text-moss-700">
+                            {quote.discountLabel ?? quote.discountCode}
+                          </dt>
+                          <dd className="font-sans text-[15px] text-moss-700">
+                            −{formatMoney(quote.discountCents)}
+                          </dd>
+                        </div>
+                      )}
                       {quote.cleaningFeeCents > 0 && (
                         <div className="flex items-baseline justify-between gap-4">
                           <dt className="font-sans text-[14px] font-light text-ink-soft">
@@ -381,6 +401,62 @@ export default function Book() {
                         </dd>
                       </div>
                     </dl>
+
+                    {/*
+                      Deliberately understated. A large "ENTER PROMO CODE" panel
+                      makes a guest without one feel they are paying too much,
+                      and sends them off to hunt for a code instead of booking.
+                    */}
+                    <div className="mt-6">
+                      {quote.discountCents > 0 ? (
+                        <p className="font-sans text-[13px] font-light text-moss-700">
+                          {quote.discountCode} applied.{' '}
+                          <button
+                            type="button"
+                            className="link-underline"
+                            onClick={() => {
+                              setDiscountCode('');
+                              setAppliedCode('');
+                            }}
+                          >
+                            Remove
+                          </button>
+                        </p>
+                      ) : (
+                        <div className="flex flex-wrap items-end gap-3">
+                          <label className="flex-1">
+                            <span className="eyebrow text-ink-muted">Discount code</span>
+                            <input
+                              type="text"
+                              value={discountCode}
+                              onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                  e.preventDefault();
+                                  setAppliedCode(discountCode.trim());
+                                }
+                              }}
+                              placeholder="If you have one"
+                              maxLength={40}
+                              className="mt-2 w-full border-0 border-b border-bloom-300 bg-transparent pb-2 font-sans text-[15px] uppercase tracking-wide text-ink placeholder:normal-case placeholder:tracking-normal placeholder:text-ink-faint focus:border-moss-600 focus:outline-none"
+                            />
+                          </label>
+                          <button
+                            type="button"
+                            className="btn-quiet text-moss-700"
+                            onClick={() => setAppliedCode(discountCode.trim())}
+                            disabled={!discountCode.trim()}
+                          >
+                            <span>Apply</span>
+                          </button>
+                        </div>
+                      )}
+                      {quote.discountError && appliedCode && (
+                        <p className="mt-3 font-sans text-[13px] font-light text-clay-600">
+                          {quote.discountError}
+                        </p>
+                      )}
+                    </div>
 
                     {/*
                       How much to pay today. Only shown when the stay is far

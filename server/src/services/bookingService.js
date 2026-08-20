@@ -21,6 +21,7 @@ import {
   retrieveSession,
 } from '../lib/stripe.js';
 import { addDays, toUtcMidnight } from '../lib/dates.js';
+import { claimRedemption, findDiscountByCode, releaseRedemption } from './discountService.js';
 import {
   sendBalanceReceipt,
   sendBalanceReminder,
@@ -67,9 +68,36 @@ export async function createPendingBooking({
   checkIn,
   checkOut,
   depositPercent = null,
+  discountCode = null,
 }) {
   const property = await getActiveProperty(propertyId);
-  const quote = computeQuote({ property, checkIn, checkOut, guests });
+
+  /**
+   * The code is re-priced here from the database rather than trusted from the
+   * quote the browser was shown. A guest can put anything in the request body;
+   * what a code is worth is decided in exactly one place, and this is after it.
+   */
+  const discount = discountCode ? await findDiscountByCode(discountCode) : null;
+  const quote = computeQuote({ property, checkIn, checkOut, guests, discount, requestedCode: discountCode });
+
+  /**
+   * Claiming is separate from pricing because it has to be atomic against the
+   * redemption cap. If the code ran out between the guest seeing the quote and
+   * submitting, they are told rather than silently charged the full price for
+   * a booking they agreed to at a discount.
+   */
+  let claimedCode = null;
+  if (quote.discountCode) {
+    const claimed = await claimRedemption(quote.discountCode);
+    if (!claimed) {
+      throw conflict(
+        'That discount code has just been fully redeemed. Please re-check your dates for an updated price.',
+        undefined,
+        'DISCOUNT_UNAVAILABLE'
+      );
+    }
+    claimedCode = quote.discountCode;
+  }
 
   // Re-validated here, not just at the route: this is the last point before
   // money is scheduled, and it is the only one that matters.
@@ -90,7 +118,13 @@ export async function createPendingBooking({
     depositPercent: chosenDeposit,
   });
 
-  const booking = await withLock(propertyLockKey(property._id.toString()), async () => {
+  /**
+   * From here on the redemption is already claimed, so every path that fails to
+   * produce a live booking has to hand it back. Without this, a guest who picks
+   * dates that were taken a second earlier burns one use of the code.
+   */
+  const booking = await withClaimReleasedOnFailure(claimedCode, () =>
+    withLock(propertyLockKey(property._id.toString()), async () => {
     const draft = {
       propertyId: property._id,
       guestName,
@@ -104,6 +138,9 @@ export async function createPendingBooking({
       nightlyRateCents: quote.nightlyRateCents,
       accommodationCents: quote.accommodationCents,
       cleaningFeeCents: quote.cleaningFeeCents,
+      discountCode: quote.discountCode ?? '',
+      discountLabel: quote.discountLabel ?? '',
+      discountCents: quote.discountCents ?? 0,
       totalPriceCents: quote.totalPriceCents,
       currency: quote.currency,
       status: BOOKING_STATUS.PENDING,
@@ -120,7 +157,8 @@ export async function createPendingBooking({
     await assertSoleClaimant(created, property, quote);
 
     return created;
-  });
+    })
+  );
 
   // --- Outside the lock: talk to Stripe ------------------------------------
   try {
@@ -149,10 +187,23 @@ export async function createPendingBooking({
   } catch (err) {
     // Never leave an unpayable booking sitting on the calendar.
     await Booking.deleteOne({ _id: booking._id, status: BOOKING_STATUS.PENDING });
+    // The booking is gone, so the redemption it claimed must go back too.
+    if (claimedCode) await releaseRedemption(claimedCode);
     logger.error('Stripe session creation failed; pending booking rolled back', {
       bookingId: booking._id.toString(),
       error: err.message,
     });
+    throw err;
+  }
+}
+
+/** Run `fn`, handing back a claimed redemption if it throws. */
+async function withClaimReleasedOnFailure(code, fn) {
+  if (!code) return fn();
+  try {
+    return await fn();
+  } catch (err) {
+    await releaseRedemption(code);
     throw err;
   }
 }
@@ -347,6 +398,8 @@ export async function releaseBookingForSession(session, reason) {
   if (booking.status === BOOKING_STATUS.PENDING) {
     const result = await Booking.deleteOne({ _id: bookingId, status: BOOKING_STATUS.PENDING });
     if (result.deletedCount > 0) {
+      // The hold is gone, so its claim on the code goes back.
+      if (booking.discountCode) await releaseRedemption(booking.discountCode);
       logger.info('Pending booking released', { bookingId, reason });
     }
     return { released: result.deletedCount > 0 };
@@ -365,6 +418,11 @@ export async function releaseBookingForSession(session, reason) {
 /**
  * Cancel a booking and refund per policy. Uses an atomic status transition so
  * a guest double-clicking "cancel" cannot trigger two refunds.
+ *
+ * A discount redemption is deliberately NOT handed back here. Unlike a lapsed
+ * hold, this code was used for a booking that really happened, and returning it
+ * would let someone book, cancel and rebook to drain a limited code. The owner
+ * can raise the cap from the admin panel if they would rather give it back.
  */
 export async function cancelBooking({ bookingId, cancelledBy, reason, refundOverrideCents }) {
   const booking = await Booking.findOneAndUpdate(
@@ -515,7 +573,7 @@ export async function releaseExpiredHolds() {
     status: BOOKING_STATUS.PENDING,
     holdExpiresAt: { $lt: new Date() },
   })
-    .select('_id stripeSessionId')
+    .select('_id stripeSessionId discountCode')
     .lean();
 
   if (stale.length === 0) return { released: 0 };
@@ -528,6 +586,15 @@ export async function releaseExpiredHolds() {
     _id: { $in: stale.map((b) => b._id) },
     status: BOOKING_STATUS.PENDING,
   });
+
+  /**
+   * Hand back the redemptions those abandoned holds were sitting on. Done after
+   * the delete so a code is only released once the booking is definitely gone —
+   * releasing first would briefly let the cap be exceeded.
+   */
+  for (const b of stale) {
+    if (b.discountCode) await releaseRedemption(b.discountCode);
+  }
 
   logger.info('Expired booking holds released', { count: result.deletedCount });
   return { released: result.deletedCount };

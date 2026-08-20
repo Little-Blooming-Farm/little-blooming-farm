@@ -19,6 +19,7 @@ import {
   createPendingBooking,
   getActiveProperty,
 } from '../services/bookingService.js';
+import { findDiscountByCode } from '../services/discountService.js';
 import {
   bookingLimiter,
   manageLimiter,
@@ -42,6 +43,11 @@ const stayShape = {
   checkIn: dateOnly,
   checkOut: dateOnly,
   guests: z.number().int().min(1).max(40),
+  /**
+   * Only ever the code itself. What it is worth is decided server-side from the
+   * database — an amount posted from the browser is not read anywhere.
+   */
+  discountCode: z.string().trim().max(40).optional(),
 };
 
 /**
@@ -61,10 +67,11 @@ router.post(
   quoteLimiter,
   validate({ body: z.object({ ...stayShape, depositPercent: depositChoice }).strict() }),
   asyncHandler(async (req, res) => {
-    const { propertyId, checkIn, checkOut, guests, depositPercent } = req.body;
+    const { propertyId, checkIn, checkOut, guests, depositPercent, discountCode } = req.body;
 
     const property = await getActiveProperty(propertyId);
-    const quote = computeQuote({ property, checkIn, checkOut, guests });
+    const discount = discountCode ? await findDiscountByCode(discountCode) : null;
+    const quote = computeQuote({ property, checkIn, checkOut, guests, discount, requestedCode: discountCode });
 
     const chosen = assertDepositChoiceIsValid({
       property,
@@ -163,6 +170,7 @@ router.post(
       checkIn: req.body.checkIn,
       checkOut: req.body.checkOut,
       depositPercent: req.body.depositPercent,
+      discountCode: req.body.discountCode,
     });
 
     if (!checkoutUrl) {

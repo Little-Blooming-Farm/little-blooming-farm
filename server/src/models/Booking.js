@@ -77,6 +77,14 @@ const bookingSchema = new Schema(
     nightlyRateCents: { type: Number, required: true, min: 0 },
     accommodationCents: { type: Number, required: true, min: 0 },
     cleaningFeeCents: { type: Number, required: true, min: 0 },
+    /**
+     * Frozen alongside the rest of the breakdown. The code is stored as text
+     * rather than a reference so deleting a discount later cannot rewrite what
+     * a guest was charged, and so a refund can still show what was taken off.
+     */
+    discountCode: { type: String, default: '', uppercase: true, trim: true, maxlength: 40 },
+    discountLabel: { type: String, default: '', trim: true, maxlength: 120 },
+    discountCents: { type: Number, default: 0, min: 0 },
     totalPriceCents: { type: Number, required: true, min: 0 },
     currency: { type: String, default: 'usd', lowercase: true },
 
